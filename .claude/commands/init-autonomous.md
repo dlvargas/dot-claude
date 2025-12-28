@@ -39,12 +39,29 @@ Set up a new project with full autonomous Claude configuration.
    ```
 
 4. **Create Project CLAUDE.md**
-   Get the current directory name and create a CLAUDE.md with:
-   - Project name from directory
-   - Placeholder for tech stack
-   - Placeholder for build/test commands
-   - Current focus section
-   - Reference to inherited global config
+   Get the current directory name and create a CLAUDE.md automatically using this template (DO NOT ask questions - use placeholders):
+   ```markdown
+   # {directory-name}
+
+   ## Project Overview
+   [Add project description]
+
+   ## Tech Stack
+   [Add technologies used]
+
+   ## Build/Test Commands
+   ```bash
+   # Add build commands
+   # Add test commands
+   ```
+
+   ## Current Focus
+   - Project initialization complete
+   - Ready for autonomous development
+
+   ---
+   *Inherits global autonomous configuration from ~/.claude/*
+   ```
 
 5. **Initialize Git if Needed**
    ```bash
