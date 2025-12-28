@@ -8,6 +8,7 @@ description: Git workflow standards for atomic commits and autonomous operation
 - Use conventional commits: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`, `chore:`
 - Keep subject lines under 72 characters
 - Include body for non-trivial changes
+- Do NOT add the "Generated with Claude Code" emoji signature or Co-Authored-By trailer
 
 ## Autonomous Git Operations
 When in autonomous mode:
