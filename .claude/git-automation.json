@@ -1,0 +1,8 @@
+{
+  "autoCommit": true,
+  "autoPush": false,
+  "autoPR": false,
+  "commitPrefix": "",
+  "branchPattern": "claude/{type}/{description}",
+  "protectedBranches": ["main", "master", "production"]
+}
