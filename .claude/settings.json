@@ -34,6 +34,7 @@
       "Bash(grep:*)",
       "Bash(docker:*)",
       "Bash(docker-compose:*)",
+      "Bash(xargs:*)",
       "Write",
       "Edit",
       "MultiEdit",
