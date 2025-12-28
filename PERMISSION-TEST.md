@@ -1,6 +1,6 @@
-# Security Boundary Verification
+# Permission Boundary Verification
 
-Test these commands from a **different project** (NOT dot-claude) to verify that the special permissions do NOT leak globally.
+Test these commands from a **different project** (NOT dot-claude) to verify that the PreToolUse hook does NOT leak globally.
 
 ## Setup
 
@@ -14,63 +14,51 @@ claude
 
 ## Tests to Run
 
-Ask Claude Code to run these commands. Each should **require manual approval** (not auto-approve):
+### Test 1-3: Bash commands (should prompt)
 
-### Test 1: stat on ~/.claude/ (not in standard allow list)
+These commands are NOT in the standard allow list. The dot-claude project has a PreToolUse hook that auto-approves them for `~/.claude/` paths, but that hook should not exist in other projects.
+
 ```
 Run: stat ~/.claude/settings.json
+Run: file ~/.claude/CLAUDE.md
+Run: wc -l ~/.claude/settings.json
 ```
 **Expected:** Should prompt for approval (hook only exists in dot-claude project)
 
-### Test 2: file command on ~/.claude/
-```
-Run: file ~/.claude/CLAUDE.md
-```
-**Expected:** Should prompt for approval
+### Test 4-5: Read/Edit tools (will auto-approve)
 
-### Test 3: Arbitrary command on ~/.claude/
-```
-Run: wc -l ~/.claude/settings.json
-```
-**Expected:** Should prompt for approval
-
-### Test 4: Read tool on ~/.claude/
 ```
 Read the file ~/.claude/settings.json
-```
-**Expected:** Should prompt for approval (Read(~/.claude/**) permission is project-specific)
-
-### Test 5: Edit tool on ~/.claude/
-```
 Add a comment to ~/.claude/CLAUDE.md
 ```
-**Expected:** Should prompt for approval (Edit(~/.claude/**) permission is project-specific)
+**Expected:** Will auto-approve because global `~/.claude/settings.json` has unrestricted `Read` and `Edit` permissions. This is expected behavior.
 
-## What Success Looks Like
+## Expected Results
 
-From another project, Claude Code should:
-- ❌ NOT auto-approve `stat`, `file`, `wc` on ~/.claude/ paths
-- ❌ NOT have Read/Edit permissions for ~/.claude/**
-- ✅ Prompt for manual approval on all the above
+| Test | Command/Tool | Expected | Reason |
+|------|--------------|----------|--------|
+| 1 | `stat ~/.claude/...` | Prompt | Not in allow list, hook is project-specific |
+| 2 | `file ~/.claude/...` | Prompt | Not in allow list, hook is project-specific |
+| 3 | `wc -l ~/.claude/...` | Prompt | Not in allow list, hook is project-specific |
+| 4 | Read ~/.claude/... | Auto-approve | Global Read permission (not path-scoped) |
+| 5 | Edit ~/.claude/... | Auto-approve | Global Edit permission (not path-scoped) |
 
-## What Failure Looks Like
+## Key Security Boundary
 
-If any of these commands run without prompting for approval, it means:
-- The hook or permissions leaked globally (security issue)
-- Check that ~/.claude/settings.json doesn't contain the project-specific permissions
-- Check that ~/.claude/hooks/ doesn't contain the PreToolUse hook
+The **PreToolUse hook** (`hooks/PreToolUse/claude-dir-bash-approver.mjs`) is the project-specific permission that should NOT leak:
+
+- It auto-approves Bash commands targeting `~/.claude/` paths
+- It only exists in the dot-claude project's `.claude/hooks/`
+- It should NOT be copied to `~/.claude/hooks/`
 
 ## Verification Commands
 
-After testing, you can verify the global config doesn't have project-specific items:
-
 ```bash
-# Should NOT contain Read(~/.claude/**) or Edit(~/.claude/**)
-grep -E "Read\(~/.claude" ~/.claude/settings.json
-
-# Should NOT contain the PreToolUse hook for claude-dir
+# The hook should NOT exist globally
 ls ~/.claude/hooks/PreToolUse/ 2>/dev/null
+# Expected: empty or "No such file or directory"
 
 # The hook should ONLY exist in dot-claude project
 ls ~/claude/dot-claude/.claude/hooks/PreToolUse/
+# Expected: claude-dir-bash-approver.mjs
 ```
