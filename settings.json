@@ -1,5 +1,6 @@
 {
   "permissions": {
+    "additionalDirectories": ["~/.claude/"],
     "allow": [
       "Bash(git:*)",
       "Bash(gh:*)",
@@ -38,11 +39,23 @@
       "MultiEdit",
       "Read",
       "Glob",
-      "Grep"
+      "Grep",
+      "Read(~/.claude/**)",
+      "Edit(~/.claude/**)"
     ],
     "deny": []
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node hooks/PreToolUse/claude-dir-bash-approver.mjs"
+          }
+        ]
+      }
+    ],
     "PreCompact": [
       {
         "hooks": [
