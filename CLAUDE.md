@@ -44,6 +44,19 @@ diff -rq commands ~/.claude/commands
 # Repeat for skills, rules, scripts, hooks
 ```
 
+### DO NOT Sync Globally
+
+The following are **project-specific** and should NOT be copied to `~/.claude/`:
+
+| Item | Reason |
+|------|--------|
+| `additionalDirectories: ["~/.claude/"]` | Security: other projects should not auto-access ~/.claude/ |
+| `Read(~/.claude/**)`, `Edit(~/.claude/**)` | Security: same reason |
+| `PreToolUse` hook for ~/.claude/ bash approval | Security: same reason |
+| `hooks/PreToolUse/claude-dir-bash-approver.mjs` | Project-specific hook, uses relative path |
+
+These permissions exist only in this project's `settings.json` and `.claude/settings.json` to allow managing the global config without prompts.
+
 ---
 
 # Global Claude Orchestration Layer
