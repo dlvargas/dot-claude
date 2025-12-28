@@ -4,26 +4,13 @@ Set up a new project with full autonomous Claude configuration.
 
 ## Instructions
 
-Run this SINGLE compound command to set up everything at once (minimizes prompts):
+Run the initialization script (also initializes git if not already a repo):
 
 ```bash
-mkdir -p .claude/hooks/ContextRecoveryHook .claude/hooks/SkillActivationHook .claude/skills .claude/rules .claude/commands .claude/backups && \
-cp ~/.claude/settings.json .claude/ 2>/dev/null || true && \
-cp ~/.claude/hooks/ContextRecoveryHook/*.mjs .claude/hooks/ContextRecoveryHook/ 2>/dev/null || true && \
-cp ~/.claude/hooks/SkillActivationHook/*.mjs .claude/hooks/SkillActivationHook/ 2>/dev/null || true && \
-cp ~/.claude/hooks/auto-git-workflow.mjs .claude/hooks/ 2>/dev/null || true && \
-cp ~/.claude/skills/skill-rules.json .claude/skills/ 2>/dev/null || true && \
-cp -r ~/.claude/skills/git-automation .claude/skills/ 2>/dev/null || true && \
-cp -r ~/.claude/skills/session-management .claude/skills/ 2>/dev/null || true && \
-cp -r ~/.claude/skills/code-review .claude/skills/ 2>/dev/null || true && \
-cp -r ~/.claude/skills/testing .claude/skills/ 2>/dev/null || true && \
-cp ~/.claude/rules/*.md .claude/rules/ 2>/dev/null || true && \
-cp ~/.claude/commands/*.md .claude/commands/ 2>/dev/null || true && \
-echo '{"autoCommit":true,"autoPush":false,"autoPR":false,"commitPrefix":"","branchPattern":"claude/{type}/{description}","protectedBranches":["main","master","production"]}' > .claude/git-automation.json && \
-echo "Setup complete"
+~/.claude/scripts/init-autonomous.sh
 ```
 
-Then create CLAUDE.md using the directory name (DO NOT ask questions - use placeholders):
+Then create CLAUDE.md using the directory name (use placeholders, don't ask questions):
 
 ```markdown
 # {directory-name}
@@ -46,11 +33,6 @@ Then create CLAUDE.md using the directory name (DO NOT ask questions - use place
 
 ---
 *Inherits global autonomous configuration from ~/.claude/*
-```
-
-Finally, initialize git if not already a repo:
-```bash
-git rev-parse --git-dir >/dev/null 2>&1 || git init
 ```
 
 Report success with available commands: /commit, /pr, /ship, /review, /status, /autonomous
