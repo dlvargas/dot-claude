@@ -31,20 +31,14 @@ When completing ANY code change:
    - `chore`: Maintenance
    - `style`: Formatting
 
-3. **Commit with Full Context**
+3. **Commit**
    ```bash
-   git commit -m "$(cat <<'EOF'
-   feat(component): add user authentication flow
+   git commit -m "feat(component): add user authentication flow"
+   ```
 
-   - Implement login/logout functionality
-   - Add JWT token handling
-   - Create protected route wrapper
-
-   🤖 Generated with Claude Code
-
-   Co-Authored-By: Claude <noreply@anthropic.com>
-   EOF
-   )"
+   For non-trivial changes, include a body:
+   ```bash
+   git commit -m "feat(component): add user authentication flow" -m "Implement login/logout with JWT token handling"
    ```
 
 ## Auto-PR Workflow
@@ -73,10 +67,6 @@ When creating pull requests:
    ## Testing
    - [ ] Unit tests pass
    - [ ] Manual testing complete
-
-   ## Screenshots (if UI)
-
-   🤖 Generated with Claude Code
    EOF
    )"
    ```

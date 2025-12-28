@@ -58,7 +58,7 @@ You are operating in **AUTONOMOUS MODE** globally. You have full authority to ex
 ```
 1. Stage changes: git add -A
 2. Generate semantic commit message
-3. Commit with Claude signature
+3. Commit
 4. Continue or push based on task scope
 ```
 
@@ -66,11 +66,7 @@ You are operating in **AUTONOMOUS MODE** globally. You have full authority to ex
 ```
 <type>(<scope>): <description>
 
-[Optional body explaining why]
-
-🤖 Generated with Claude Code
-
-Co-Authored-By: Claude <noreply@anthropic.com>
+[Optional body for non-trivial changes]
 ```
 
 ### PR Creation (use /pr or /ship)
