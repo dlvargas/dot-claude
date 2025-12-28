@@ -4,70 +4,35 @@ Set up a new project with full autonomous Claude configuration.
 
 ## Instructions
 
-1. **Create Directory Structure**
-   ```bash
-   mkdir -p .claude/hooks/ContextRecoveryHook .claude/hooks/SkillActivationHook .claude/skills .claude/rules .claude/commands .claude/backups
-   ```
+Run the initialization script (also initializes git if not already a repo):
 
-2. **Copy Global Configuration**
-   ```bash
-   cp ~/.claude/settings.json .claude/
-   cp ~/.claude/hooks/ContextRecoveryHook/*.mjs .claude/hooks/ContextRecoveryHook/
-   cp ~/.claude/hooks/SkillActivationHook/*.mjs .claude/hooks/SkillActivationHook/
-   cp ~/.claude/hooks/auto-git-workflow.mjs .claude/hooks/
-   cp ~/.claude/skills/skill-rules.json .claude/skills/
-   cp -r ~/.claude/skills/git-automation .claude/skills/
-   cp -r ~/.claude/skills/session-management .claude/skills/
-   cp -r ~/.claude/skills/code-review .claude/skills/
-   cp -r ~/.claude/skills/testing .claude/skills/
-   cp ~/.claude/rules/*.md .claude/rules/
-   cp ~/.claude/commands/*.md .claude/commands/
-   ```
+```bash
+~/.claude/scripts/init-autonomous.sh
+```
 
-3. **Create git-automation.json**
-   ```bash
-   cat > .claude/git-automation.json << 'EOF'
-   {
-     "autoCommit": true,
-     "autoPush": false,
-     "autoPR": false,
-     "commitPrefix": "",
-     "branchPattern": "claude/{type}/{description}",
-     "protectedBranches": ["main", "master", "production"]
-   }
-   EOF
-   ```
+Then create CLAUDE.md using the directory name (use placeholders, don't ask questions):
 
-4. **Create Project CLAUDE.md**
-   Get the current directory name and create a CLAUDE.md automatically using this template (DO NOT ask questions - use placeholders):
-   ```markdown
-   # {directory-name}
+```markdown
+# {directory-name}
 
-   ## Project Overview
-   [Add project description]
+## Project Overview
+[Add project description]
 
-   ## Tech Stack
-   [Add technologies used]
+## Tech Stack
+[Add technologies used]
 
-   ## Build/Test Commands
-   ```bash
-   # Add build commands
-   # Add test commands
-   ```
+## Build/Test Commands
+```bash
+# Add build commands
+# Add test commands
+```
 
-   ## Current Focus
-   - Project initialization complete
-   - Ready for autonomous development
+## Current Focus
+- Project initialization complete
+- Ready for autonomous development
 
-   ---
-   *Inherits global autonomous configuration from ~/.claude/*
-   ```
+---
+*Inherits global autonomous configuration from ~/.claude/*
+```
 
-5. **Initialize Git if Needed**
-   ```bash
-   git init  # Only if not already a git repo
-   ```
-
-6. **Report Success**
-   Display confirmation with available commands:
-   - /commit, /pr, /ship, /review, /status, /autonomous
+Report success with available commands: /commit, /pr, /ship, /review, /status, /autonomous
