@@ -17,6 +17,33 @@ Claude Code autonomous configuration project.
 - Project initialization complete
 - Ready for autonomous development
 
+## CRITICAL: Three-Way Sync Requirement
+
+This project is the **source of truth** for Claude Code configuration. The project root contains source files that must be deployed to two locations.
+
+### Directory Mapping
+| Source (project root) | Deploy to `.claude/` | Deploy to `~/.claude/` |
+|-----------------------|---------------------|------------------------|
+| `commands/`           | `.claude/commands/` | `~/.claude/commands/`  |
+| `scripts/`            | `.claude/scripts/`  | `~/.claude/scripts/`   |
+| `skills/`             | `.claude/skills/`   | `~/.claude/skills/`    |
+| `rules/`              | `.claude/rules/`    | `~/.claude/rules/`     |
+| `hooks/`              | `.claude/hooks/`    | `~/.claude/hooks/`     |
+| `settings.json`       | `.claude/settings.json` | `~/.claude/settings.json` |
+
+### After ANY Change to Config Files
+1. **Edit source files** in project root (e.g., `commands/`, `skills/`)
+2. **Copy to project `.claude/`** for local testing
+3. **Copy to `~/.claude/`** for global deployment
+4. **Commit** the source file changes
+
+### Verification
+```bash
+diff -rq commands .claude/commands
+diff -rq commands ~/.claude/commands
+# Repeat for skills, rules, scripts, hooks
+```
+
 ---
 
 # Global Claude Orchestration Layer
