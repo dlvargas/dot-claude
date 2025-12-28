@@ -17,6 +17,11 @@ When in autonomous mode:
 3. Push to feature branches automatically
 4. Create PRs with comprehensive descriptions
 
+## Amending Commits
+- Only amend commits you made in the current session
+- Before amending a commit you didn't just create, verify authorship with `git log -1`
+- Never amend commits that have been pushed
+
 ## Branch Strategy
 - `main`: Production-ready code
 - `feature/*`: New features
