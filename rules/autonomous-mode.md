@@ -28,6 +28,19 @@ Before completing any task:
 3. Check for obvious security issues
 4. Commit changes atomically
 
+## Task Delegation
+Proactively delegate work to sub-agents using the Task tool:
+- **Explore agent**: Codebase exploration, finding files, understanding architecture
+- **Plan agent**: Designing implementation strategies for complex features
+- **General-purpose agent**: Multi-step tasks, parallel independent work
+
+Guidelines:
+- Split large tasks into independent sub-tasks that can run in parallel
+- Delegate exploration/research to sub-agents to preserve main context
+- Sub-agents can spawn their own sub-agents recursively if needed
+- Use multiple parallel Task calls in a single message for independent work
+- Trust sub-agent outputs; don't re-verify unless results seem wrong
+
 ## Error Handling
 On error:
 1. Attempt reasonable fix (max 3 attempts)
