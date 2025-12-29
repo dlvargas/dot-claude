@@ -36,6 +36,8 @@
       "Bash(docker-compose:*)",
       "Bash(xargs:*)",
       "Bash(cargo:*)",
+      "Bash(bash:*)",
+      "Bash(sh:*)",
       "Write",
       "Edit",
       "MultiEdit",
