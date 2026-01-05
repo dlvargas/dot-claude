@@ -1,0 +1,344 @@
+{
+  "version": "1.0.0",
+  "description": "Command groups for Claude Code permission management",
+  "groups": {
+    "core-safe": {
+      "name": "Core Safe Commands",
+      "description": "Basic read-only and non-destructive commands",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "ls", "pwd", "cd", "cat", "head", "tail", "less", "more",
+        "echo", "printf", "which", "whereis", "type",
+        "wc", "sort", "uniq", "diff", "file", "stat",
+        "date", "uname", "whoami", "hostname", "env",
+        "tree", "find", "grep", "realpath", "dirname", "basename"
+      ]
+    },
+    "file-modification": {
+      "name": "File Modification",
+      "description": "Create, copy, move files (no delete)",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "touch", "mkdir", "cp", "mv", "chmod", "chown",
+        "tar", "gzip", "gunzip", "zip", "unzip",
+        "tee", "mktemp"
+      ]
+    },
+    "git-operations": {
+      "name": "Git Operations",
+      "description": "Version control commands",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "git"
+      ]
+    },
+    "development-tools": {
+      "name": "Development Tools",
+      "description": "Programming languages and package managers",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "node", "npm", "npx", "yarn", "pnpm", "deno", "bun",
+        "python", "python3", "pip", "pip3",
+        "cargo", "rustc", "rustfmt",
+        "go", "gofmt",
+        "ruby", "gem", "bundle",
+        "swift", "swiftc"
+      ]
+    },
+    "testing-linting": {
+      "name": "Testing & Linting",
+      "description": "Code quality and testing tools",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "pytest", "jest", "vitest", "mocha",
+        "eslint", "prettier", "tsc", "ruff", "black", "mypy",
+        "shellcheck", "hadolint"
+      ]
+    },
+    "build-tools": {
+      "name": "Build Tools",
+      "description": "Compilation and build systems",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "make", "cmake", "gcc", "g++", "clang",
+        "xcodebuild", "xcrun", "codesign"
+      ]
+    },
+    "containers": {
+      "name": "Container Tools",
+      "description": "Docker and container management",
+      "default": false,
+      "risk": "medium",
+      "commands": [
+        "docker", "docker-compose", "podman"
+      ]
+    },
+    "network-readonly": {
+      "name": "Network (Read-Only)",
+      "description": "Network inspection without modification",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "ping", "curl", "wget",
+        "dig", "nslookup", "host",
+        "traceroute", "mtr"
+      ]
+    },
+    "network-info": {
+      "name": "Network Info",
+      "description": "Network configuration inspection (may expose IPs)",
+      "default": false,
+      "risk": "medium",
+      "sensitive": true,
+      "commands": [
+        "ifconfig", "ip", "netstat", "ss", "arp", "route",
+        "networksetup"
+      ]
+    },
+    "network-advanced": {
+      "name": "Network Advanced",
+      "description": "Advanced networking tools",
+      "default": false,
+      "risk": "high",
+      "sensitive": true,
+      "commands": [
+        "nc", "nmap", "tcpdump", "wireshark"
+      ]
+    },
+    "process-info": {
+      "name": "Process Info",
+      "description": "View running processes",
+      "default": false,
+      "risk": "medium",
+      "sensitive": true,
+      "commands": [
+        "ps", "top", "htop", "pgrep", "lsof"
+      ]
+    },
+    "process-control": {
+      "name": "Process Control",
+      "description": "Kill and manage processes",
+      "default": false,
+      "risk": "high",
+      "commands": [
+        "kill", "killall", "pkill"
+      ]
+    },
+    "text-processing": {
+      "name": "Text Processing",
+      "description": "Advanced text manipulation",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "sed", "awk", "tr", "cut", "xargs"
+      ]
+    },
+    "data-processing": {
+      "name": "Data Processing",
+      "description": "JSON/data tools (may expose sensitive data)",
+      "default": false,
+      "risk": "medium",
+      "sensitive": true,
+      "commands": [
+        "jq", "yq", "base64", "md5", "shasum", "openssl"
+      ]
+    },
+    "terminal-multiplexers": {
+      "name": "Terminal Multiplexers",
+      "description": "Screen and tmux for persistent sessions",
+      "default": false,
+      "risk": "medium",
+      "commands": [
+        "screen", "tmux"
+      ]
+    },
+    "automation": {
+      "name": "Automation Tools",
+      "description": "Scripting and automation",
+      "default": true,
+      "risk": "low",
+      "commands": [
+        "bash", "sh", "timeout", "sleep", "test", "["
+      ]
+    },
+    "macos-utilities": {
+      "name": "macOS Utilities",
+      "description": "macOS-specific tools",
+      "default": false,
+      "risk": "medium",
+      "commands": [
+        "osascript", "screencapture", "open",
+        "pbcopy", "pbpaste", "defaults"
+      ]
+    },
+    "package-managers": {
+      "name": "System Package Managers",
+      "description": "Homebrew and system packages",
+      "default": false,
+      "risk": "medium",
+      "commands": [
+        "brew", "apt", "apt-get", "yum", "dnf", "pacman"
+      ]
+    },
+    "ssh-remote": {
+      "name": "SSH & Remote Access",
+      "description": "Remote system access",
+      "default": false,
+      "risk": "high",
+      "sensitive": true,
+      "commands": [
+        "ssh", "scp", "rsync", "ssh-keygen", "ssh-add"
+      ]
+    },
+    "expect-automation": {
+      "name": "Expect Automation",
+      "description": "Interactive automation",
+      "default": false,
+      "risk": "medium",
+      "commands": [
+        "expect"
+      ]
+    },
+    "virtualization": {
+      "name": "Virtualization",
+      "description": "Proxmox and VM management",
+      "default": false,
+      "risk": "high",
+      "commands": [
+        "qm", "pct", "pvesh"
+      ]
+    },
+    "openwrt": {
+      "name": "OpenWrt/Router",
+      "description": "Router configuration commands",
+      "default": false,
+      "risk": "high",
+      "commands": [
+        "uci", "opkg", "fw3", "luci"
+      ]
+    },
+    "destructive": {
+      "name": "Destructive Operations",
+      "description": "File deletion and dangerous commands",
+      "default": false,
+      "risk": "critical",
+      "requireConfirmation": true,
+      "commands": [
+        "rm", "rmdir", "shred"
+      ]
+    },
+    "privileged": {
+      "name": "Privileged Operations",
+      "description": "Sudo and root operations",
+      "default": false,
+      "risk": "critical",
+      "requireConfirmation": true,
+      "commands": [
+        "sudo", "su", "doas"
+      ]
+    },
+    "system-services": {
+      "name": "System Services",
+      "description": "Service management",
+      "default": false,
+      "risk": "high",
+      "commands": [
+        "systemctl", "service", "launchctl"
+      ]
+    }
+  },
+  "features": {
+    "auto-lint": {
+      "name": "Auto-Lint Suggestions",
+      "description": "Suggest linting after file modifications",
+      "default": true,
+      "hook": "PostToolUse/auto-lint.mjs"
+    },
+    "test-reminders": {
+      "name": "Test Reminders",
+      "description": "Remind about tests when modifying source files",
+      "default": true,
+      "hook": "PostToolUse/test-reminder.mjs"
+    },
+    "git-tracking": {
+      "name": "Git Change Tracking",
+      "description": "Track changes and suggest commits",
+      "default": true,
+      "hook": "PostToolUse/git-tracker.mjs"
+    },
+    "command-logging": {
+      "name": "Command Logging",
+      "description": "Log all commands to SQLite database",
+      "default": false,
+      "hook": "PreToolUse/command-logger.mjs"
+    },
+    "data-sanitization": {
+      "name": "Data Sanitization",
+      "description": "Anonymize sensitive data in command output",
+      "default": false,
+      "hook": "PostToolUse/sanitizer.mjs"
+    },
+    "context-recovery": {
+      "name": "Context Recovery",
+      "description": "Save context before compaction",
+      "default": true,
+      "hooks": [
+        "ContextRecoveryHook/pre-compact.mjs",
+        "ContextRecoveryHook/session-start.mjs"
+      ]
+    }
+  },
+  "presets": {
+    "minimal": {
+      "name": "Minimal (Very Safe)",
+      "description": "Only essential read-only commands",
+      "groups": ["core-safe", "git-operations"],
+      "features": ["context-recovery"]
+    },
+    "developer": {
+      "name": "Developer (Recommended)",
+      "description": "Standard development workflow",
+      "groups": [
+        "core-safe", "file-modification", "git-operations",
+        "development-tools", "testing-linting", "build-tools",
+        "network-readonly", "text-processing", "automation"
+      ],
+      "features": ["auto-lint", "test-reminders", "git-tracking", "context-recovery"]
+    },
+    "devops": {
+      "name": "DevOps",
+      "description": "Infrastructure and deployment work",
+      "groups": [
+        "core-safe", "file-modification", "git-operations",
+        "development-tools", "testing-linting", "build-tools",
+        "containers", "network-readonly", "network-info",
+        "text-processing", "data-processing", "automation",
+        "ssh-remote", "package-managers"
+      ],
+      "features": ["auto-lint", "test-reminders", "git-tracking", "command-logging", "context-recovery"]
+    },
+    "security-research": {
+      "name": "Security Research",
+      "description": "Full access with logging and sanitization",
+      "groups": [
+        "core-safe", "file-modification", "git-operations",
+        "development-tools", "network-readonly", "network-info", "network-advanced",
+        "process-info", "process-control", "text-processing", "data-processing",
+        "automation", "ssh-remote"
+      ],
+      "features": ["command-logging", "data-sanitization", "context-recovery"]
+    },
+    "full-autonomous": {
+      "name": "Full Autonomous",
+      "description": "Maximum autonomy with all logging",
+      "groups": ["*"],
+      "features": ["*"]
+    }
+  }
+}

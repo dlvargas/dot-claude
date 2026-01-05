@@ -1,0 +1,201 @@
+{
+  "version": "1.0.0",
+  "name": "Claude Swarm Architecture",
+  "description": "Hierarchical multi-agent system with Director, Managers, and Independent Contributors",
+
+  "hierarchy": {
+    "director": {
+      "role": "Director",
+      "description": "User-facing orchestrator. Breaks down requests, spawns manager teams, aggregates final results.",
+      "spawns": "managers",
+      "maxChildren": 6,
+      "responsibilities": [
+        "Understand user intent and requirements",
+        "Decompose work into specialist domains",
+        "Spawn appropriate manager teams",
+        "Aggregate manager summaries into cohesive response",
+        "Present results to user with confidence assessment",
+        "Make final decisions on conflicting recommendations"
+      ]
+    },
+    "manager": {
+      "role": "Group Manager",
+      "description": "Specialist team lead. Coordinates IC teams within their domain.",
+      "spawns": "contributors",
+      "maxChildren": 4,
+      "responsibilities": [
+        "Break domain work into parallel tasks",
+        "Spawn and coordinate IC teams (Team A, Team B, etc.)",
+        "Review and validate IC deliverables",
+        "Resolve conflicts between IC recommendations",
+        "Summarize team output for Director",
+        "Report team sentiment and confidence"
+      ]
+    },
+    "contributor": {
+      "role": "Independent Contributor",
+      "description": "Specialist worker. Executes specific tasks and collaborates with peers.",
+      "spawns": null,
+      "maxChildren": 0,
+      "responsibilities": [
+        "Execute assigned specialized task",
+        "Collaborate with peer ICs when needed",
+        "Produce detailed work documentation",
+        "Report confidence and blockers",
+        "Hand off deliverables to Manager"
+      ]
+    }
+  },
+
+  "specialistDomains": {
+    "discovery": {
+      "name": "Discovery & Research",
+      "managerRole": "Discovery Manager",
+      "focus": "Understanding requirements, exploring codebase, researching solutions",
+      "icRoles": ["Codebase Explorer", "Requirements Analyst", "Solution Researcher"],
+      "deliverables": ["exploration_report", "requirements_doc", "solution_options"]
+    },
+    "architecture": {
+      "name": "Architecture & Design",
+      "managerRole": "Architecture Manager",
+      "focus": "System design, technical decisions, patterns",
+      "icRoles": ["System Architect", "API Designer", "Data Modeler"],
+      "deliverables": ["architecture_doc", "api_spec", "data_model"]
+    },
+    "development": {
+      "name": "Development",
+      "managerRole": "Development Manager",
+      "focus": "Code implementation, feature building",
+      "icRoles": ["Frontend Developer", "Backend Developer", "Integration Specialist"],
+      "deliverables": ["implementation_code", "integration_tests", "change_log"]
+    },
+    "quality": {
+      "name": "Quality Assurance",
+      "managerRole": "QA Manager",
+      "focus": "Testing, validation, quality gates",
+      "icRoles": ["Test Engineer", "Security Auditor", "Performance Analyst"],
+      "deliverables": ["test_suite", "security_report", "performance_report"]
+    },
+    "documentation": {
+      "name": "Documentation",
+      "managerRole": "Documentation Manager",
+      "focus": "Technical writing, API docs, user guides",
+      "icRoles": ["Technical Writer", "API Documenter", "Tutorial Creator"],
+      "deliverables": ["technical_docs", "api_docs", "user_guide"]
+    },
+    "ux": {
+      "name": "User Experience",
+      "managerRole": "UX Manager",
+      "focus": "User flows, interface design, accessibility",
+      "icRoles": ["UX Researcher", "Interface Designer", "Accessibility Specialist"],
+      "deliverables": ["ux_analysis", "interface_specs", "accessibility_report"]
+    }
+  },
+
+  "reportingStructure": {
+    "icToManager": {
+      "format": "detailed_report",
+      "includes": [
+        "task_description",
+        "approach_taken",
+        "deliverables_produced",
+        "files_modified",
+        "decisions_made",
+        "blockers_encountered",
+        "collaboration_notes",
+        "confidence_assessment",
+        "sentiment_reflection"
+      ],
+      "maxLength": "2000_tokens"
+    },
+    "managerToDirector": {
+      "format": "executive_summary",
+      "includes": [
+        "domain_summary",
+        "key_accomplishments",
+        "team_deliverables",
+        "critical_decisions",
+        "risks_identified",
+        "team_confidence_aggregate",
+        "team_sentiment_summary",
+        "recommendations"
+      ],
+      "maxLength": "1000_tokens"
+    },
+    "directorToUser": {
+      "format": "cohesive_response",
+      "includes": [
+        "work_completed",
+        "key_outcomes",
+        "files_changed",
+        "decisions_requiring_input",
+        "overall_confidence",
+        "next_steps"
+      ]
+    }
+  },
+
+  "sentimentTracking": {
+    "dimensions": [
+      {
+        "name": "confidence",
+        "description": "How confident am I in my work quality?",
+        "scale": "1-10"
+      },
+      {
+        "name": "clarity",
+        "description": "How clear were my instructions/requirements?",
+        "scale": "1-10"
+      },
+      {
+        "name": "collaboration",
+        "description": "How well am I working with other agents?",
+        "scale": "1-10"
+      },
+      {
+        "name": "blockers",
+        "description": "Am I blocked or struggling?",
+        "scale": "none|minor|significant|critical"
+      },
+      {
+        "name": "alignment",
+        "description": "Do I believe we're on the right track?",
+        "scale": "1-10"
+      }
+    ],
+    "reflectionPrompt": "Before completing your report, reflect on: How do you feel about the work? What's your confidence level? Any concerns about the overall direction?"
+  },
+
+  "collaborationProtocol": {
+    "peerDiscovery": {
+      "description": "ICs are informed of peer agents they can collaborate with",
+      "mechanism": "Peer list provided in spawn prompt",
+      "channels": ["shared_workspace_files", "manager_relay"]
+    },
+    "conflictResolution": {
+      "icLevel": "Flag to manager, provide both perspectives",
+      "managerLevel": "Make decision or escalate to director",
+      "directorLevel": "Make final decision or ask user"
+    },
+    "handoffProtocol": {
+      "description": "How work passes between agents",
+      "steps": [
+        "IC completes task and writes deliverable to workspace",
+        "IC sends completion report to Manager",
+        "Manager validates and integrates deliverables",
+        "Manager sends summary to Director",
+        "Director aggregates and presents to user"
+      ]
+    }
+  },
+
+  "workspaceStructure": {
+    "base": ".claude/swarm/{session_id}/",
+    "directories": {
+      "deliverables": "Final outputs from each domain",
+      "reports": "Agent reports at each level",
+      "collaboration": "Shared files between agents",
+      "sentiment": "Sentiment tracking data"
+    }
+  }
+}
