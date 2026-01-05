@@ -163,23 +163,25 @@ export class SandboxManager {
   sanitizeUsername(text) {
     if (!text) return text;
 
-    // Replace actual username
-    const patterns = [
-      new RegExp(`\\b${USERNAME}\\b`, 'g'),
-      new RegExp(`/Users/${USERNAME}`, 'g'),
-      new RegExp(`/home/${USERNAME}`, 'g'),
-      new RegExp(`C:\\\\Users\\\\${USERNAME}`, 'gi'),
-    ];
-
     let result = text;
-    for (const pattern of patterns) {
-      result = result.replace(pattern, (match) => {
-        if (match.includes('/Users/')) return '/home/user';
-        if (match.includes('/home/')) return '/home/user';
-        if (match.toLowerCase().includes('c:\\users\\')) return 'C:\\Users\\user';
-        return 'user';
-      });
-    }
+
+    // Replace macOS home paths first (most specific)
+    result = result.replace(new RegExp(`/Users/${USERNAME}(/[^\\s]*)?`, 'g'), (match, rest) => {
+      return '/home/user' + (rest || '');
+    });
+
+    // Replace Linux home paths
+    result = result.replace(new RegExp(`/home/${USERNAME}(/[^\\s]*)?`, 'g'), (match, rest) => {
+      return '/home/user' + (rest || '');
+    });
+
+    // Replace Windows home paths
+    result = result.replace(new RegExp(`C:\\\\Users\\\\${USERNAME}(\\\\[^\\s]*)?`, 'gi'), (match, rest) => {
+      return 'C:\\Users\\user' + (rest || '');
+    });
+
+    // Replace standalone username occurrences (word boundary)
+    result = result.replace(new RegExp(`\\b${USERNAME}\\b`, 'g'), 'user');
 
     return result;
   }
