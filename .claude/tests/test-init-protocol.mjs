@@ -95,7 +95,9 @@ const expectedFeatures = [
   'Diff Tracking',
   'Director Mode',
   'Swarm Mode',
-  'Path Sanitization'
+  'Path Sanitization',
+  '100% and 100%',
+  'Structured SDLC'
 ];
 
 test('CLAUDE.md documents all autonomous features', () => {
@@ -125,6 +127,118 @@ test('Director Mode is on by default', () => {
     line.includes('Director Mode') && (line.includes('✅') || line.includes('On'))
   );
   assert.ok(directorLine, 'Director Mode should be on by default');
+});
+
+test('100% and 100% feature is off by default', () => {
+  const hundredLine = claudeMd.split('\n').find(line =>
+    line.includes('100% and 100%') && (line.includes('⬜') || line.includes('Off'))
+  );
+  assert.ok(hundredLine, '100% and 100% should be off by default');
+});
+
+test('Structured SDLC is off by default', () => {
+  const sdlcLine = claudeMd.split('\n').find(line =>
+    line.includes('Structured SDLC') && (line.includes('⬜') || line.includes('Off'))
+  );
+  assert.ok(sdlcLine, 'Structured SDLC should be off by default');
+});
+
+// ==================== PHASED SDLC WORKFLOW TESTS ====================
+console.log('\n📊 Phased SDLC Workflow Tests');
+
+test('CLAUDE.md documents phased SDLC workflow', () => {
+  assert.ok(claudeMd.includes('Phased SDLC Workflow'),
+    'Should have Phased SDLC Workflow section');
+});
+
+test('CLAUDE.md documents all 4 phases', () => {
+  assert.ok(claudeMd.includes('Phase 1: Discovery'), 'Should have Phase 1: Discovery');
+  assert.ok(claudeMd.includes('Phase 2: Design'), 'Should have Phase 2: Design');
+  assert.ok(claudeMd.includes('Phase 3: Development'), 'Should have Phase 3: Development');
+  assert.ok(claudeMd.includes('Phase 4: Delivery'), 'Should have Phase 4: Delivery');
+});
+
+test('Phase 1 includes required artifacts', () => {
+  assert.ok(claudeMd.includes('Requirements Document'), 'Should include Requirements Document');
+  assert.ok(claudeMd.includes('Entity Relationship Diagram') || claudeMd.includes('ERD'),
+    'Should include ERD');
+  assert.ok(claudeMd.includes('User Stories'), 'Should include User Stories');
+  assert.ok(claudeMd.includes('Process Map'), 'Should include Process Map');
+  assert.ok(claudeMd.includes('Solution Design'), 'Should include Solution Design');
+});
+
+test('Phase 2 includes SA/LD/BSA verification', () => {
+  assert.ok(claudeMd.includes('SA') || claudeMd.includes('Solutions Architect'),
+    'Should include SA verification');
+  assert.ok(claudeMd.includes('LD') || claudeMd.includes('Lead Developer'),
+    'Should include LD verification');
+  assert.ok(claudeMd.includes('BSA') || claudeMd.includes('Business Systems'),
+    'Should include BSA verification');
+});
+
+test('Workflow includes sign-off gates', () => {
+  assert.ok(claudeMd.includes('Sign-Off') || claudeMd.includes('SIGN OFF'),
+    'Should document sign-off gates');
+});
+
+test('Phase 4 documents 100% and 100% enforcement', () => {
+  assert.ok(claudeMd.includes('100% and 100% Enforcement') ||
+    (claudeMd.includes('100%') && claudeMd.includes('Enforcement')),
+    'Should document 100% enforcement');
+});
+
+test('Workflow requires human merge for main branch', () => {
+  assert.ok(claudeMd.includes('Human Merge') || claudeMd.includes('HUMAN MERGE'),
+    'Should require human merge');
+});
+
+// ==================== PARALLEL CLAUDE MODELS TESTS ====================
+console.log('\n🔀 Parallel Claude Working Models Tests');
+
+test('CLAUDE.md documents parallel working models', () => {
+  assert.ok(claudeMd.includes('Parallel Claude Working Models'),
+    'Should have Parallel Claude Working Models section');
+});
+
+test('Documents Peer Review Pipeline model', () => {
+  assert.ok(claudeMd.includes('Peer Review Pipeline'),
+    'Should document Peer Review Pipeline');
+});
+
+test('Documents Adversarial Testing model', () => {
+  assert.ok(claudeMd.includes('Adversarial Testing'),
+    'Should document Adversarial Testing');
+});
+
+test('Documents Parallel Specialists model', () => {
+  assert.ok(claudeMd.includes('Parallel Specialists'),
+    'Should document Parallel Specialists');
+});
+
+test('Documents Evolution/Iteration model', () => {
+  assert.ok(claudeMd.includes('Evolution/Iteration') || claudeMd.includes('Evolution'),
+    'Should document Evolution/Iteration');
+});
+
+test('Documents Debate/Consensus model', () => {
+  assert.ok(claudeMd.includes('Debate/Consensus') || claudeMd.includes('Debate'),
+    'Should document Debate/Consensus');
+});
+
+test('Documents Red Team/Blue Team model', () => {
+  assert.ok(claudeMd.includes('Red Team') || claudeMd.includes('Blue Team'),
+    'Should document Red Team/Blue Team');
+});
+
+test('Documents Assembly Line model', () => {
+  assert.ok(claudeMd.includes('Assembly Line'),
+    'Should document Assembly Line');
+});
+
+test('Includes model selection guide', () => {
+  assert.ok(claudeMd.includes('Choosing the Right Model') ||
+    claudeMd.includes('Recommended Model'),
+    'Should include model selection guidance');
 });
 
 // ==================== INIT-AUTONOMOUS COMMAND TESTS ====================

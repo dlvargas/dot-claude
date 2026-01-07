@@ -37,6 +37,8 @@ Use the AskUserQuestion tool to gather user preferences:
 4. Auto Git Commits - Commit after each logical unit of work
 5. Diff Tracking - Generate diffs for all changes
 6. Path Sanitization - Mask sensitive paths in output
+7. 100% and 100% - Require 100% code coverage and 100% tests passing before commits
+8. Structured SDLC - Phased workflow with sign-off gates (Discovery → Design → Development → Delivery)
 
 #### Question 3: Director/Swarm Mode
 
@@ -66,7 +68,9 @@ Based on user responses:
      "diffTracking": true/false,
      "pathSanitization": true/false,
      "directorMode": true/false,
-     "swarmMode": true/false
+     "swarmMode": true/false,
+     "hundredAndHundred": true/false,
+     "structuredSdlc": true/false
    }
    ```
 
@@ -137,6 +141,8 @@ Report successful initialization with:
 | **Path Sanitization** | On | Mask usernames and sensitive paths in output |
 | **Director Mode** | On | Sub-agent delegation for complex tasks |
 | **Swarm Mode** | Off | Enterprise-scale multi-agent teams |
+| **100% and 100%** | Off | Require 100% code coverage and 100% tests passing before commits |
+| **Structured SDLC** | Off | Phased workflow: Discovery → Design → Development → Delivery with sign-off gates |
 
 ## Swarm Manager Domains (when Swarm Mode enabled)
 

@@ -65,6 +65,8 @@ On initialization, Claude MUST prompt the user with the following choices:
 | **Director Mode** | ✅ On | Enable Director Claude orchestration |
 | **Swarm Mode** | ⬜ Off | Full multi-agent swarm capabilities |
 | **Path Sanitization** | ✅ On | Mask sensitive paths in output |
+| **100% and 100%** | ⬜ Off | Require 100% code coverage and 100% tests passing |
+| **Structured SDLC** | ⬜ Off | Phased workflow with sign-off gates |
 
 #### 3. Swarm Configuration (if Swarm Mode enabled)
 
@@ -297,6 +299,496 @@ You are operating in **AUTONOMOUS MODE** globally. You have full authority to ex
 | IC Role | Responsibility |
 |---------|----------------|
 | The Guy Who Orders Pizza Every Release IC | Celebration coordination, team morale |
+
+---
+
+# Phased SDLC Workflow
+
+The Enterprise Swarm follows an artifact-driven development lifecycle with explicit sign-off gates. Enable this workflow via the **Structured SDLC** feature during `/init-autonomous`.
+
+## Phase Overview
+
+```
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                              PHASED SDLC WORKFLOW                             │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  PHASE 1: DISCOVERY                          PHASE 2: DESIGN                 │
+│  ┌─────────────────────────────────────┐    ┌─────────────────────────────┐ │
+│  │ Requirements ──► ERD ──► User       │    │ UI/UX Mockups (SVG/PNG)     │ │
+│  │ Gathering        │      Stories     │    │         │                   │ │
+│  │                  │         │        │    │         ▼                   │ │
+│  │                  ▼         ▼        │    │ SA/LD/BSA Verification      │ │
+│  │            Process Map ◄───┘        │    │         │                   │ │
+│  │                  │                  │    │         ▼                   │ │
+│  │                  ▼                  │    │    ╔═══════════╗            │ │
+│  │          Solution Design            │    │    ║ SIGN OFF  ║            │ │
+│  │                  │                  │    │    ╚═══════════╝            │ │
+│  │                  ▼                  │    └─────────────────────────────┘ │
+│  │           ╔═══════════╗             │                                    │
+│  │           ║ SIGN OFF  ║             │                                    │
+│  │           ╚═══════════╝             │                                    │
+│  └─────────────────────────────────────┘                                    │
+│                                                                              │
+│  PHASE 3: DEVELOPMENT                        PHASE 4: DELIVERY              │
+│  ┌─────────────────────────────────────┐    ┌─────────────────────────────┐ │
+│  │     Atomic Features (parallel)      │    │ QA Testing                  │ │
+│  │     ┌───┐ ┌───┐ ┌───┐ ┌───┐        │    │ Documentation               │ │
+│  │     │ F1│ │ F2│ │ F3│ │ F4│        │    │ Code Coverage               │ │
+│  │     └─┬─┘ └─┬─┘ └─┬─┘ └─┬─┘        │    │         │                   │ │
+│  │       └──┬──┴──┬──┴──┬──┘          │    │         ▼                   │ │
+│  │          ▼     ▼     ▼             │    │ ┌─────────────────────┐     │ │
+│  │        PR → Code Review → Merge    │    │ │ 100% Coverage       │     │ │
+│  │              │                     │    │ │ 100% Tests Passing  │     │ │
+│  │              ▼                     │    │ └─────────────────────┘     │ │
+│  │         Integration                │    │         │                   │ │
+│  │                                    │    │         ▼                   │ │
+│  │                                    │    │    ╔═════════════╗          │ │
+│  │                                    │    │    ║ HUMAN MERGE ║          │ │
+│  │                                    │    │    ╚═════════════╝          │ │
+│  └─────────────────────────────────────┘    └─────────────────────────────┘ │
+└──────────────────────────────────────────────────────────────────────────────┘
+```
+
+## Phase 1: Discovery
+
+**Managers Involved:** Discovery & Requirements, Product & Strategy, Architecture
+
+### Artifacts Produced
+
+| Artifact | Owner IC | Format | Description |
+|----------|----------|--------|-------------|
+| Requirements Document | Requirements Gathering IC | `requirements.md` | Functional & non-functional requirements |
+| Entity Relationship Diagram | Solutions Architect IC | `erd.md` or `erd.mermaid` | Data model and relationships |
+| User Stories | Product Design IC | `user-stories.md` | Stories with acceptance criteria |
+| Process Map | Needs Analysis IC | `process-map.md` | Workflow and process diagrams |
+| Solution Design | Solutions Architect IC | `solution-design.md` | Architecture and technical approach |
+
+### Sign-Off Gate
+
+Before proceeding to Phase 2:
+1. All Phase 1 artifacts must exist in `.claude/swarm/{session}/deliverables/phase1/`
+2. Director Claude summarizes findings and presents to user
+3. User approves or requests revisions
+4. Sign-off recorded in `.claude/swarm/{session}/signoffs/phase1.json`
+
+```json
+{
+  "phase": 1,
+  "name": "Discovery",
+  "signedOffBy": "user",
+  "timestamp": "2024-01-15T10:30:00Z",
+  "artifacts": ["requirements.md", "erd.md", "user-stories.md", "process-map.md", "solution-design.md"],
+  "notes": "Approved with minor adjustments to user story #3"
+}
+```
+
+## Phase 2: Design
+
+**Managers Involved:** Design (UX/UI), Architecture, Product & Strategy
+
+### Artifacts Produced
+
+| Artifact | Owner IC | Format | Description |
+|----------|----------|--------|-------------|
+| UI Mockups | Customer Facing UX/UI Design IC | `mockups/*.svg`, `*.png` | Visual designs for all screens |
+| Component Specs | Internal UX/UI Design IC | `components.md` | Reusable component definitions |
+| Interaction Flows | Vendor UX/UI Design IC | `flows.md` | User journey animations/transitions |
+| SA Review | Solutions Architect IC | `sa-review.md` | Architecture feasibility sign-off |
+| LD Review | Internal Development Documentation Lead IC | `ld-review.md` | Documentation structure sign-off |
+| BSA Review | Business Systems Integration IC | `bsa-review.md` | Business systems integration sign-off |
+
+### Verification Protocol
+
+```markdown
+## SA/LD/BSA Verification Checklist
+
+### Solutions Architect (SA)
+- [ ] Design is technically feasible
+- [ ] Aligns with solution architecture
+- [ ] No scalability concerns
+- [ ] Security requirements addressed
+
+### Lead Developer (LD)
+- [ ] Design is implementable
+- [ ] Follows coding standards
+- [ ] Test strategy is clear
+- [ ] Documentation plan exists
+
+### Business Systems Analyst (BSA)
+- [ ] Meets business requirements
+- [ ] Integration points identified
+- [ ] Data flows are correct
+- [ ] Compliance requirements met
+```
+
+### Sign-Off Gate
+
+Before proceeding to Phase 3:
+1. All mockups in `.claude/swarm/{session}/deliverables/phase2/mockups/`
+2. SA, LD, and BSA reviews complete with no blockers
+3. User approves visual designs
+4. Sign-off recorded in `.claude/swarm/{session}/signoffs/phase2.json`
+
+## Phase 3: Development
+
+**Managers Involved:** Frontend Development, Backend Development, Integration, Release & DevOps
+
+### Atomic Feature Development
+
+Each feature is developed as an atomic unit by dedicated ICs working in parallel:
+
+```
+Feature Branches (parallel work)
+├── feature/auth-login (B2C Front End IC + Back End IC)
+├── feature/auth-register (B2C Front End IC + Back End IC)
+├── feature/profile-view (Internal Front End IC + Back End IC)
+└── feature/api-integration (Systems Integration IC + Back End IC)
+```
+
+### Development Protocol
+
+1. **Branch Creation**: Each atomic feature gets its own branch
+2. **Parallel Development**: Multiple ICs work simultaneously on different features
+3. **Continuous Integration**: Each feature PR triggers CI pipeline
+4. **Code Review**: All PRs require review before merge
+
+### PR and Code Review Protocol
+
+```markdown
+## PR Template
+
+### Summary
+[Brief description of changes]
+
+### Type
+- [ ] Feature
+- [ ] Bug Fix
+- [ ] Refactor
+- [ ] Documentation
+
+### Changes
+- [File-by-file breakdown]
+
+### Testing
+- [ ] Unit tests added/updated
+- [ ] Integration tests pass
+- [ ] Manual testing completed
+
+### Review Checklist
+- [ ] Code follows project conventions
+- [ ] No security vulnerabilities
+- [ ] Performance impact considered
+- [ ] Documentation updated
+```
+
+### Merge Protocol
+
+Feature branches merge to `develop` after:
+1. PR approved by reviewer (another Claude IC or Manager)
+2. All CI checks pass
+3. No merge conflicts
+4. Test coverage maintained
+
+## Phase 4: Delivery
+
+**Managers Involved:** Quality Assurance, Documentation, Release & DevOps
+
+### Quality Gates
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    QUALITY GATE CHECKLIST                    │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────────┐     ┌─────────────────┐               │
+│  │ CODE COVERAGE   │     │ TEST RESULTS    │               │
+│  │ ═══════════════ │     │ ═══════════════ │               │
+│  │ Target: 100%    │     │ Target: 100%    │               │
+│  │ Current: ____%  │     │ Passing: ____%  │               │
+│  │                 │     │ Failing: ____   │               │
+│  └────────┬────────┘     └────────┬────────┘               │
+│           │                       │                         │
+│           └───────────┬───────────┘                         │
+│                       ▼                                     │
+│           ┌─────────────────────┐                           │
+│           │  BOTH MUST BE 100%  │                           │
+│           │  TO PROCEED         │                           │
+│           └──────────┬──────────┘                           │
+│                      │                                      │
+│                      ▼                                      │
+│  ┌─────────────────────────────────────────┐               │
+│  │           DOCUMENTATION                  │               │
+│  │  - API docs complete                     │               │
+│  │  - User guides updated                   │               │
+│  │  - Changelog entry added                 │               │
+│  │  - README reflects changes               │               │
+│  └─────────────────────────────────────────┘               │
+│                      │                                      │
+│                      ▼                                      │
+│  ┌─────────────────────────────────────────┐               │
+│  │         HUMAN MERGE REQUIRED             │               │
+│  │                                          │               │
+│  │  Claude prepares PR to main              │               │
+│  │  Human reviews and merges                │               │
+│  │  Deployment triggered                    │               │
+│  └─────────────────────────────────────────┘               │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### 100% and 100% Enforcement
+
+When the **100% and 100%** feature is enabled:
+
+1. **Pre-Merge Check**: Before any PR to main, Claude verifies:
+   - Code coverage is exactly 100%
+   - All tests pass (0 failures)
+
+2. **Blocking Behavior**: If either condition fails:
+   - PR is NOT created
+   - Claude reports what's missing
+   - Work continues until both conditions are met
+
+3. **Verification Command**:
+   ```bash
+   # Example for Node.js projects
+   npm run test -- --coverage --coverageThreshold='{"global":{"branches":100,"functions":100,"lines":100,"statements":100}}'
+   ```
+
+### Human Merge Requirement
+
+The final merge to `main`/`master` **always** requires human approval:
+
+1. Claude prepares the PR with comprehensive summary
+2. Claude runs final verification (100% and 100%)
+3. Claude notifies user: "PR ready for human review"
+4. Human reviews changes
+5. Human clicks merge
+6. Claude may assist with post-merge tasks (deployment, announcements)
+
+---
+
+# Parallel Claude Working Models
+
+Beyond the hierarchical Director/Manager/IC swarm, here are alternative parallel Claude architectures for different use cases:
+
+## Model 1: Peer Review Pipeline
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    PEER REVIEW PIPELINE                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Author Claude ──► Reviewer Claude ──► Approver Claude      │
+│       │                  │                   │              │
+│       ▼                  ▼                   ▼              │
+│  [Write Code]      [Review Code]      [Final Check]         │
+│       │                  │                   │              │
+│       └──────► Revise ◄──┘                   │              │
+│                  │                           │              │
+│                  └──────────► Merge ◄────────┘              │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best for:** High-quality code with multiple review perspectives
+
+**How it works:**
+- Author Claude writes the implementation
+- Reviewer Claude reviews for bugs, style, security
+- If issues found, Author revises
+- Approver Claude does final verification before merge
+
+## Model 2: Adversarial Testing
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ADVERSARIAL TESTING                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│       Builder Claude          Breaker Claude                │
+│            │                       │                        │
+│            ▼                       ▼                        │
+│     [Build Feature]         [Try to Break It]               │
+│            │                       │                        │
+│            ├───────────────────────┤                        │
+│            ▼                       ▼                        │
+│      [Fix Bugs] ◄────────── [Report Bugs]                   │
+│            │                                                │
+│            ▼                                                │
+│      [Hardened Code]                                        │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best for:** Security-critical code, edge case handling
+
+**How it works:**
+- Builder Claude implements the feature
+- Breaker Claude actively tries to find bugs, security holes, edge cases
+- Builder fixes issues, Breaker continues testing
+- Cycle continues until Breaker can't find more issues
+
+## Model 3: Parallel Specialists
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    PARALLEL SPECIALISTS                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
+│  │ Frontend │  │ Backend  │  │ Database │  │   Docs   │   │
+│  │  Claude  │  │  Claude  │  │  Claude  │  │  Claude  │   │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘   │
+│       │             │             │             │          │
+│       └─────────────┴──────┬──────┴─────────────┘          │
+│                            │                                │
+│                    Integration Claude                       │
+│                            │                                │
+│                     [Unified System]                        │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best for:** Full-stack features requiring multiple domains
+
+**How it works:**
+- Each specialist Claude works on their domain in parallel
+- All share a collaboration workspace for contracts/interfaces
+- Integration Claude combines and tests the unified system
+
+## Model 4: Evolution/Iteration
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    EVOLUTION/ITERATION                       │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Generation 1      Generation 2      Generation 3          │
+│  ┌─────────┐       ┌─────────┐       ┌─────────┐          │
+│  │ Claude  │──────►│ Claude  │──────►│ Claude  │          │
+│  │  v1.0   │       │  v2.0   │       │  v3.0   │          │
+│  └─────────┘       └─────────┘       └─────────┘          │
+│       │                 │                 │                │
+│       ▼                 ▼                 ▼                │
+│  [Basic Impl]    [+ Optimization]  [+ Edge Cases]          │
+│                                                             │
+│  Each generation improves upon the previous                 │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best for:** Complex algorithms, optimization problems
+
+**How it works:**
+- Each Claude generation builds upon the previous
+- v1 creates working implementation
+- v2 optimizes for performance
+- v3 handles edge cases and robustness
+- Can continue for as many generations as needed
+
+## Model 5: Debate/Consensus
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     DEBATE/CONSENSUS                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   Claude A         Claude B         Claude C               │
+│   (Approach 1)     (Approach 2)     (Approach 3)           │
+│       │                │                │                   │
+│       └────────────────┼────────────────┘                   │
+│                        │                                    │
+│                   Moderator Claude                          │
+│                        │                                    │
+│                        ▼                                    │
+│   ┌─────────────────────────────────────┐                  │
+│   │ "Claude A's approach is best        │                  │
+│   │  because... with modifications      │                  │
+│   │  from Claude C for edge cases"      │                  │
+│   └─────────────────────────────────────┘                  │
+│                        │                                    │
+│                   [Synthesis]                               │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best for:** Architecture decisions, design choices
+
+**How it works:**
+- Multiple Claudes propose different approaches
+- Moderator Claude evaluates trade-offs
+- Best elements synthesized into final approach
+- Documents rationale for decision
+
+## Model 6: Red Team/Blue Team
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    RED TEAM / BLUE TEAM                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│   Blue Team                        Red Team                 │
+│   (Defenders)                      (Attackers)              │
+│   ┌─────────────┐                 ┌─────────────┐          │
+│   │ Build       │                 │ Find        │          │
+│   │ Security    │◄───────────────►│ Vulnera-    │          │
+│   │ Controls    │                 │ bilities    │          │
+│   └─────────────┘                 └─────────────┘          │
+│         │                               │                   │
+│         ▼                               ▼                   │
+│   [Hardened     ]                 [Vulnerability]           │
+│   [System       ]                 [Report      ]            │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best for:** Security audits, penetration testing preparation
+
+**How it works:**
+- Blue Team builds security controls
+- Red Team attempts to bypass them
+- Blue Team strengthens based on Red Team findings
+- Results in battle-tested security
+
+## Model 7: Assembly Line
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                      ASSEMBLY LINE                           │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  Stage 1      Stage 2      Stage 3      Stage 4      Stage 5│
+│  ┌─────┐      ┌─────┐      ┌─────┐      ┌─────┐      ┌─────┐│
+│  │Parse│ ──► │Trans│ ──► │Valid│ ──► │ Test│ ──► │ Doc │   │
+│  │     │      │form │      │ate  │      │     │      │     │   │
+│  └─────┘      └─────┘      └─────┘      └─────┘      └─────┘│
+│                                                             │
+│  Work items flow through stages, each Claude specializes    │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Best for:** Batch processing, migrations, bulk operations
+
+**How it works:**
+- Each stage has a specialized Claude
+- Work items flow through the pipeline
+- Each Claude does one thing well
+- Enables high throughput for repetitive tasks
+
+## Choosing the Right Model
+
+| Use Case | Recommended Model |
+|----------|-------------------|
+| New feature development | Enterprise Swarm (Director/Manager/IC) |
+| Code quality improvement | Peer Review Pipeline |
+| Security-critical code | Adversarial Testing or Red/Blue Team |
+| Full-stack features | Parallel Specialists |
+| Algorithm optimization | Evolution/Iteration |
+| Architecture decisions | Debate/Consensus |
+| Bulk migrations | Assembly Line |
 
 ---
 
