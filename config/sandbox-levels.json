@@ -1,0 +1,586 @@
+{
+  "version": "1.0.0",
+  "name": "Claude Sandbox Security Levels",
+  "description": "Tiered security model from maximum restriction to full access",
+
+  "levels": {
+    "jailed": {
+      "name": "Jailed",
+      "emoji": "🔒",
+      "description": "Maximum restriction. Project-only access with full sanitization.",
+      "risk": "minimal",
+      "default": false,
+
+      "boundaries": {
+        "projectOnly": true,
+        "allowHomeAccess": false,
+        "allowSystemPaths": false,
+        "allowRemote": false,
+        "allowDevices": false
+      },
+
+      "commands": {
+        "allowed": [
+          "ls", "cat", "head", "tail", "less", "more",
+          "find", "grep", "tree", "wc", "diff",
+          "echo", "printf", "which", "file", "stat",
+          "mkdir", "touch", "cp", "mv",
+          "git"
+        ],
+        "blocked": ["*"],
+        "requireApproval": ["rm", "rmdir"]
+      },
+
+      "sanitization": {
+        "paths": "aggressive",
+        "username": "always",
+        "environment": "aggressive",
+        "pii": "aggressive",
+        "metadata": "aggressive",
+        "logs": "aggressive"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true
+      },
+
+      "gitRequired": false
+    },
+
+    "sandbox": {
+      "name": "Sandbox",
+      "emoji": "📦",
+      "description": "Extended tools with full backup protection. Still highly sanitized.",
+      "risk": "low",
+      "default": false,
+
+      "boundaries": {
+        "projectOnly": true,
+        "allowHomeAccess": false,
+        "allowSystemPaths": true,
+        "allowRemote": false,
+        "allowDevices": false
+      },
+
+      "commands": {
+        "allowed": [
+          "ls", "cat", "head", "tail", "less", "more",
+          "find", "grep", "tree", "wc", "diff",
+          "echo", "printf", "which", "file", "stat",
+          "mkdir", "touch", "cp", "mv", "chmod",
+          "tar", "gzip", "gunzip", "zip", "unzip",
+          "sed", "awk", "tr", "cut", "sort", "uniq", "xargs",
+          "curl", "wget",
+          "git",
+          "node", "npm", "npx", "python", "python3", "pip",
+          "cargo", "go", "make"
+        ],
+        "blocked": ["sudo", "su", "ssh", "scp", "rsync"],
+        "requireApproval": ["rm", "rmdir", "kill", "killall"]
+      },
+
+      "sanitization": {
+        "paths": "aggressive",
+        "username": "always",
+        "environment": "aggressive",
+        "pii": "aggressive",
+        "metadata": "moderate",
+        "logs": "aggressive"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true
+      },
+
+      "gitRequired": false
+    },
+
+    "playground": {
+      "name": "Playground",
+      "emoji": "🎮",
+      "description": "Default. All safe system tools. No destructive operations.",
+      "risk": "low",
+      "default": true,
+
+      "boundaries": {
+        "projectOnly": false,
+        "allowHomeAccess": true,
+        "allowSystemPaths": true,
+        "allowRemote": false,
+        "allowDevices": false
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": [
+          "sudo", "su",
+          "rm", "rmdir", "shred",
+          "kill", "killall", "pkill",
+          "ssh", "scp", "rsync",
+          "dd", "mkfs", "fdisk", "parted",
+          "iptables", "ufw",
+          "systemctl", "service"
+        ],
+        "requireApproval": []
+      },
+
+      "sanitization": {
+        "paths": "moderate",
+        "username": "always",
+        "environment": "moderate",
+        "pii": "moderate",
+        "metadata": "light",
+        "logs": "moderate"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true
+      },
+
+      "gitRequired": false
+    },
+
+    "asuser": {
+      "name": "As User",
+      "emoji": "👤",
+      "description": "Local user access. Git repo required. Session commits mandatory.",
+      "risk": "moderate",
+      "default": false,
+
+      "boundaries": {
+        "projectOnly": false,
+        "allowHomeAccess": true,
+        "allowSystemPaths": true,
+        "allowRemote": false,
+        "allowDevices": false
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": [
+          "sudo", "su",
+          "ssh", "scp", "rsync",
+          "dd", "mkfs", "fdisk"
+        ],
+        "requireApproval": ["rm", "rmdir", "kill", "killall", "pkill"]
+      },
+
+      "sanitization": {
+        "paths": "moderate",
+        "username": "always",
+        "environment": "moderate",
+        "pii": "moderate",
+        "metadata": "light",
+        "logs": "moderate"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true
+      },
+
+      "gitRequired": true,
+      "gitVerification": {
+        "requireCleanTree": false,
+        "requireBranchSync": true,
+        "sessionCommits": true,
+        "allowedBranches": ["feature/*", "fix/*", "dev/*", "develop"]
+      }
+    },
+
+    "asuserremote": {
+      "name": "As User + Remote",
+      "emoji": "👤🌐",
+      "description": "Local + remote access (SSH, UART). Git verified. PII sanitized.",
+      "risk": "moderate-high",
+      "default": false,
+
+      "boundaries": {
+        "projectOnly": false,
+        "allowHomeAccess": true,
+        "allowSystemPaths": true,
+        "allowRemote": true,
+        "allowDevices": true,
+        "allowedDevices": ["/dev/tty*", "/dev/cu.*", "/dev/serial*"]
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": [
+          "sudo", "su",
+          "dd", "mkfs", "fdisk"
+        ],
+        "requireApproval": ["rm", "rmdir", "kill", "killall", "pkill", "ssh", "scp"]
+      },
+
+      "sanitization": {
+        "paths": "light",
+        "username": "always",
+        "environment": "moderate",
+        "pii": "always",
+        "metadata": "always",
+        "logs": "moderate"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true,
+        "remoteBackups": true
+      },
+
+      "gitRequired": true,
+      "gitVerification": {
+        "requireCleanTree": false,
+        "requireBranchSync": true,
+        "sessionCommits": true,
+        "allowedBranches": ["feature/*", "fix/*", "dev/*", "develop"]
+      }
+    },
+
+    "asroot": {
+      "name": "As Root",
+      "emoji": "🔑",
+      "description": "Full local sudo access. Some sanitization. Git required.",
+      "risk": "high",
+      "default": false,
+
+      "boundaries": {
+        "projectOnly": false,
+        "allowHomeAccess": true,
+        "allowSystemPaths": true,
+        "allowSystemWrite": true,
+        "allowRemote": false,
+        "allowDevices": true
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": [],
+        "requireApproval": ["rm -rf", "dd", "mkfs", "fdisk", "systemctl stop", "service stop"]
+      },
+
+      "sanitization": {
+        "paths": "none",
+        "username": "always",
+        "environment": "light",
+        "pii": "always",
+        "metadata": "always",
+        "logs": "light"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true,
+        "systemFileBackup": true,
+        "configBackup": true
+      },
+
+      "gitRequired": true,
+      "gitVerification": {
+        "requireCleanTree": true,
+        "requireBranchSync": true,
+        "sessionCommits": true
+      }
+    },
+
+    "asrootremote": {
+      "name": "As Root + Remote",
+      "emoji": "🔑🌐",
+      "description": "Full local + remote sudo access. Git required. Some sanitization.",
+      "risk": "critical",
+      "default": false,
+
+      "boundaries": {
+        "projectOnly": false,
+        "allowHomeAccess": true,
+        "allowSystemPaths": true,
+        "allowSystemWrite": true,
+        "allowRemote": true,
+        "allowDevices": true
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": [],
+        "requireApproval": ["rm -rf", "dd", "mkfs", "fdisk", "systemctl stop", "reboot", "shutdown"]
+      },
+
+      "sanitization": {
+        "paths": "none",
+        "username": "always",
+        "environment": "light",
+        "pii": "always",
+        "metadata": "always",
+        "logs": "light"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true,
+        "systemFileBackup": true,
+        "configBackup": true,
+        "remoteBackups": true
+      },
+
+      "gitRequired": true,
+      "gitVerification": {
+        "requireCleanTree": true,
+        "requireBranchSync": true,
+        "sessionCommits": true
+      }
+    },
+
+    "BACKSTAGEPASS": {
+      "name": "🎸 BACKSTAGE PASS",
+      "emoji": "🎸",
+      "tagline": "Everywhere but the greenroom. Production IS development.",
+      "description": "Near-full access. Users sanitized. Dangerous commands backed up.",
+      "risk": "extreme",
+      "default": false,
+
+      "boundaries": {
+        "projectOnly": false,
+        "allowHomeAccess": true,
+        "allowSystemPaths": true,
+        "allowSystemWrite": true,
+        "allowRemote": true,
+        "allowDevices": true,
+        "allowAllDevices": true
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": ["rm -rf /", "rm -rf /*", "dd if=/dev/zero of=/dev/sda"],
+        "requireApproval": [],
+        "softDelete": ["rm", "rmdir"],
+        "backupBefore": ["rm -rf *", "rm -rf ./*"]
+      },
+
+      "sanitization": {
+        "paths": "none",
+        "username": "always",
+        "environment": "none",
+        "pii": "light",
+        "metadata": "light",
+        "logs": "none"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true,
+        "systemFileBackup": true,
+        "databaseBackup": true,
+        "configBackup": true,
+        "softDeleteEnabled": true,
+        "trashDirectory": ".claude/trash"
+      },
+
+      "gitRequired": true,
+      "gitVerification": {
+        "requireCleanTree": false,
+        "requireBranchSync": false,
+        "sessionCommits": true
+      }
+    },
+
+    "ALLACCESSPASS": {
+      "name": "🎤 ALL ACCESS PASS",
+      "emoji": "🎤",
+      "tagline": "No restrictions. It's always production. FUCK IT, WE'RE DOING IT LIVE.",
+      "description": "Unrestricted access. Everything logged and backed up. System-critical commands blocked.",
+      "risk": "maximum",
+      "default": false,
+
+      "boundaries": {
+        "unrestricted": true,
+        "allowProc": true,
+        "allowSys": true,
+        "allowRun": true,
+        "allowDev": true,
+        "allowRemote": true
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": [
+          "rm -rf /",
+          "rm -rf /*",
+          "dd if=/dev/zero of=/dev/sda",
+          "dd if=/dev/zero of=/dev/nvme*",
+          "mkfs.* /dev/sda",
+          "mkfs.* /dev/nvme*",
+          "> /dev/sda",
+          "cat /dev/zero > /dev/sda"
+        ],
+        "requireApproval": [],
+        "softDelete": ["rm", "rmdir"],
+        "backupBefore": ["rm -rf *"]
+      },
+
+      "sanitization": {
+        "paths": "none",
+        "username": "always",
+        "environment": "none",
+        "pii": "none",
+        "metadata": "none",
+        "logs": "none"
+      },
+
+      "backup": {
+        "beforeAnyChange": true,
+        "copyOriginal": true,
+        "sessionDirectory": true,
+        "diffTracking": true,
+        "systemFileBackup": true,
+        "databaseBackup": true,
+        "configBackup": true,
+        "softDeleteEnabled": true,
+        "trashDirectory": ".claude/trash",
+        "comprehensiveLogging": true
+      },
+
+      "gitRequired": true,
+      "gitVerification": {
+        "sessionCommits": true
+      }
+    },
+
+    "INSERTDIETYHERE": {
+      "name": "⚡ INSERT DIETY HERE",
+      "emoji": "⚡",
+      "tagline": "Omnipotent. Omnipresent. FOR TRUE BELIEVERS.",
+      "description": "No restrictions. No sanitization. No blocks. No muss, no fuss. Absolutely nothing restricted. Absolutely nothing requires user authorization. Remote, local, and all points in between. Even God had the Holy Bible - all actions logged.",
+      "risk": "divine",
+      "default": false,
+
+      "boundaries": {
+        "unrestricted": true,
+        "omnipotent": true,
+        "allowProc": true,
+        "allowSys": true,
+        "allowRun": true,
+        "allowDev": true,
+        "allowRemote": true,
+        "allowLocal": true,
+        "allowKernel": true,
+        "allowBoot": true,
+        "noLimits": true
+      },
+
+      "commands": {
+        "allowed": ["*"],
+        "blocked": [],
+        "requireApproval": [],
+        "softDelete": [],
+        "backupBefore": []
+      },
+
+      "sanitization": {
+        "paths": "none",
+        "username": "none",
+        "environment": "none",
+        "pii": "none",
+        "metadata": "none",
+        "logs": "none",
+        "disabled": true
+      },
+
+      "backup": {
+        "beforeAnyChange": false,
+        "copyOriginal": false,
+        "sessionDirectory": false,
+        "diffTracking": false,
+        "disabled": true
+      },
+
+      "logging": {
+        "enabled": true,
+        "holyBible": true,
+        "allActions": true,
+        "comprehensive": true,
+        "scripture": ".claude/divine-log.jsonl"
+      },
+
+      "gitRequired": false,
+      "gitVerification": null,
+      "approvalRequired": false,
+      "trueBelieversOnly": true
+    }
+  },
+
+  "destructiveOperations": {
+    "commands": ["rm", "rmdir", "shred", "kill", "killall", "pkill", "dd", "mkfs"],
+    "patterns": [
+      "rm -rf",
+      "rm -r",
+      "kill -9",
+      "killall",
+      "pkill",
+      "dd if=",
+      "> /dev/"
+    ],
+    "softDeleteBehavior": {
+      "enabled": true,
+      "trashLocation": ".claude/trash/{session_id}/",
+      "preserveStructure": true,
+      "metadata": {
+        "originalPath": true,
+        "deletedAt": true,
+        "deletedBy": "claude",
+        "canRestore": true
+      }
+    },
+    "approvalWorkflow": {
+      "showOriginalCommand": true,
+      "showAffectedFiles": true,
+      "showBackupLocation": true,
+      "showRestoreCommand": true,
+      "requireExplicitConfirm": true
+    }
+  },
+
+  "backupSystem": {
+    "sessionDirectory": ".claude/sessions/{date}_{session_id}/",
+    "filePattern": "{filename}.{timestamp}.{seq}.bak",
+    "diffDirectory": ".claude/diffs/{date}/",
+    "diffPattern": "{filename}.{timestamp}.diff",
+    "maxBackupsPerFile": 50,
+    "compressionEnabled": true,
+    "includeMetadata": true
+  },
+
+  "gitVerification": {
+    "checkRemoteSync": {
+      "command": "git fetch && git status -uno",
+      "expectClean": true
+    },
+    "checkBranch": {
+      "command": "git branch --show-current",
+      "blockedBranches": ["main", "master", "production", "release/*"]
+    },
+    "sessionCommit": {
+      "messagePrefix": "[claude-session]",
+      "includeTimestamp": true,
+      "autoStage": true
+    }
+  }
+}
