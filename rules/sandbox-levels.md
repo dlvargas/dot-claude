@@ -1,3 +1,7 @@
+---
+description: Security sandbox level definitions and access controls
+---
+
 # Sandbox Level Rules
 
 ## Current Level

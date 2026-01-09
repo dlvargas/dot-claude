@@ -1,0 +1,80 @@
+{
+  "version": "1.0.0",
+  "categories": {
+    "software_development": {
+      "name": "Software Development",
+      "types": [
+        "cli_tool",
+        "gui_tool",
+        "web_app",
+        "system_service",
+        "full_stack_product",
+        "enterprise_stack_product"
+      ]
+    },
+    "security_cryptography": {
+      "name": "Security & Cryptography",
+      "types": [
+        "penetration_test",
+        "back_door_injection",
+        "back_door_finder",
+        "obfuscation_tool",
+        "secure_encrypt",
+        "secure_decrypt",
+        "secure_transport",
+        "post_quantum_encrypt",
+        "post_quantum_decrypt",
+        "post_quantum_transport",
+        "post_quantum_local_device",
+        "post_quantum_remote_device"
+      ]
+    },
+    "business_systems": {
+      "name": "Business Systems",
+      "types": [
+        "crm",
+        "erp",
+        "pos",
+        "retail_ops",
+        "hotel_ops",
+        "hotel_res",
+        "hotel_billing",
+        "cannabis_seed_to_sale"
+      ]
+    },
+    "infrastructure": {
+      "name": "Infrastructure",
+      "types": [
+        "data_center",
+        "systems_audit"
+      ]
+    },
+    "sdlc_methodologies": {
+      "name": "SDLC Methodologies",
+      "types": [
+        "sdlc_waterfall",
+        "sdlc_agile",
+        "sdlc_xtreme",
+        "sdlc_10xdev",
+        "sdlc_theaiway"
+      ]
+    },
+    "documentation": {
+      "name": "Documentation",
+      "types": [
+        "documentation"
+      ]
+    },
+    "ai_assisted": {
+      "name": "AI-Assisted Workflows",
+      "types": [
+        "human_hours_to_claude_hours",
+        "provide_prompts_for_need",
+        "do_it_for_me_claude"
+      ]
+    }
+  },
+  "variants": ["new", "change_request"],
+  "total_types": 35,
+  "total_templates": 70
+}
