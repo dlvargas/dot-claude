@@ -889,6 +889,255 @@ Complete organizational structures for all 15 automotive industry presets.
 
 ---
 
+## 16. EV Powertrain (`auto-ev-powertrain`)
+
+**Focus**: Electric vehicle drivetrain systems - reverse engineering, modification, parts, emulation
+
+### Managers (7)
+
+| Manager | Responsibility |
+|---------|----------------|
+| Battery Systems Manager | HV battery RE, BMS, cell-level work |
+| Motor/Inverter Manager | Traction motors, power electronics, control |
+| Charging Systems Manager | AC/DC charging, CCS/CHAdeMO, onboard chargers |
+| Thermal Management Manager | Battery cooling, heat pumps, HVAC integration |
+| Emulation Manager | BMS spoofing, system simulation, bench testing |
+| Aftermarket Mods Manager | Power upgrades, battery swaps, conversions |
+| Parts/Replacement Manager | Cell replacement, module repair, component sourcing |
+
+### ICs (35)
+
+#### Battery Systems Manager ICs
+| IC | Focus |
+|----|-------|
+| BMS Protocol IC | CAN messages, state estimation, balancing |
+| Cell Chemistry IC | NMC, LFP, solid-state, degradation analysis |
+| Pack Architecture IC | Series/parallel config, contactors, fusing |
+| Safety Systems IC | Isolation monitoring, thermal runaway, venting |
+| Battery RE IC | Protocol decoding, firmware extraction, SOC/SOH |
+
+#### Motor/Inverter Manager ICs
+| IC | Focus |
+|----|-------|
+| Motor Control IC | FOC, DTC, torque mapping, efficiency |
+| Inverter RE IC | Gate driver, IGBT/SiC, DC bus, firmware |
+| Resolver/Encoder IC | Position sensing, calibration, fault detection |
+| Regen Braking IC | Energy recovery, blending, pedal feel |
+| Power Electronics IC | DC-DC converters, PDU, junction boxes |
+
+#### Charging Systems Manager ICs
+| IC | Focus |
+|----|-------|
+| EVSE Protocol IC | J1772, IEC 61851, pilot signal, proximity |
+| DC Fast Charge IC | CCS Combo, CHAdeMO, NACS, communication |
+| Onboard Charger IC | PFC, isolation, power levels, efficiency |
+| V2G/V2H IC | Bidirectional charging, grid integration |
+| Charging Network IC | Backend protocols, OCPP, roaming |
+
+#### Thermal Management Manager ICs
+| IC | Focus |
+|----|-------|
+| Battery Cooling IC | Liquid cooling, cold plates, glycol loops |
+| Heat Pump IC | Refrigerant systems, COP optimization |
+| Preconditioning IC | Cabin/battery prep, scheduled charging |
+| Thermal Modeling IC | Simulation, heat rejection, ambient limits |
+
+#### Emulation Manager ICs
+| IC | Focus |
+|----|-------|
+| BMS Emulator IC | Spoofing battery signals for bench testing |
+| Motor Emulator IC | Simulated load, dyno integration |
+| Vehicle Emulator IC | CAN simulation, gateway bypass |
+| HIL Integration IC | Hardware-in-loop, dSPACE, NI |
+| Diagnostic Bypass IC | DTC suppression, readiness emulation |
+
+#### Aftermarket Mods Manager ICs
+| IC | Focus |
+|----|-------|
+| Power Upgrade IC | Motor swaps, inverter tuning, unlocks |
+| Battery Upgrade IC | Capacity increases, chemistry swaps |
+| Conversion IC | ICE-to-EV, donor vehicle integration |
+| Range Extension IC | Auxiliary batteries, trailer range extenders |
+| Performance Tuning IC | Torque curves, launch control, track modes |
+
+#### Parts/Replacement Manager ICs
+| IC | Focus |
+|----|-------|
+| Cell Sourcing IC | OEM cells, aftermarket, salvage grading |
+| Module Repair IC | Cell replacement, spot welding, BMS reset |
+| Motor Rebuild IC | Bearing replacement, winding repair |
+| Component Testing IC | Capacity testing, impedance, IR measurement |
+
+---
+
+## 17. ADAS OEM (`auto-adas-oem`)
+
+**Focus**: Advanced driver assistance - OEM development, control systems, functional safety
+
+### Managers (8)
+
+| Manager | Responsibility |
+|---------|----------------|
+| Perception Manager | Sensors, fusion, object detection |
+| Control Systems Manager | Path planning, vehicle dynamics, actuation |
+| Message Systems Manager | CAN/Ethernet architecture, latency, redundancy |
+| Threshold Systems Manager | Sensor calibration, detection limits, triggers |
+| Safety Manager | Functional safety, SOTIF, failure modes |
+| Reverse Engineering Manager | Competitor analysis, protocol decoding |
+| Simulation Manager | Virtual testing, scenario generation |
+| Validation Manager | Track testing, real-world validation |
+
+### ICs (40)
+
+#### Perception Manager ICs
+| IC | Focus |
+|----|-------|
+| Camera Systems IC | Mono/stereo, ISP, lens calibration |
+| Radar Systems IC | Short/long range, 4D imaging, interference |
+| Lidar Systems IC | Solid-state, mechanical, point cloud processing |
+| Ultrasonic IC | Parking sensors, close-range detection |
+| Sensor Fusion IC | Multi-modal fusion, Kalman filtering, tracking |
+| Object Classification IC | Neural networks, edge cases, false positives |
+
+#### Control Systems Manager ICs
+| IC | Focus |
+|----|-------|
+| Longitudinal Control IC | ACC, AEB, speed control, jerk limiting |
+| Lateral Control IC | Lane keeping, lane centering, steering torque |
+| Path Planning IC | Trajectory generation, obstacle avoidance |
+| Vehicle Dynamics IC | Tire models, stability, ESC integration |
+| Actuator Control IC | EPS, brake-by-wire, throttle-by-wire |
+| Supervisor IC | System arbitration, handoff, degradation |
+
+#### Message Systems Manager ICs
+| IC | Focus |
+|----|-------|
+| CAN Architecture IC | Bus topology, gateway, message routing |
+| Automotive Ethernet IC | 100BASE-T1, TSN, bandwidth allocation |
+| Message Timing IC | Latency requirements, jitter, determinism |
+| Redundancy IC | Dual channels, failsafe, limp modes |
+| Security IC | SecOC, authentication, intrusion detection |
+| Diagnostics IC | UDS for ADAS, DTCs, freeze frames |
+
+#### Threshold Systems Manager ICs
+| IC | Focus |
+|----|-------|
+| Detection Thresholds IC | Range limits, confidence levels, hysteresis |
+| Intervention Thresholds IC | TTC, warning vs braking, driver override |
+| Environmental Limits IC | Weather, lighting, road surface conditions |
+| Calibration Targets IC | Target specifications, fixture design |
+| Sensor Degradation IC | Blockage detection, cleaning, fault handling |
+
+#### Safety Manager ICs
+| IC | Focus |
+|----|-------|
+| ISO 26262 IC | ASIL decomposition, safety goals, FMEA |
+| SOTIF IC | ISO 21448, triggering conditions, edge cases |
+| Failure Modes IC | FMEA, fault trees, safe states |
+| Redundancy Design IC | Dual processing, watchdogs, voting |
+| Safety Validation IC | Fault injection, coverage, certification |
+| Cybersecurity IC | ISO 21434, threat analysis, penetration |
+
+#### Reverse Engineering Manager ICs
+| IC | Focus |
+|----|-------|
+| Competitor Teardown IC | Sensor analysis, PCB reverse, BOM estimation |
+| Protocol Decoding IC | CAN/Ethernet message reverse engineering |
+| Algorithm Analysis IC | Control strategy inference, tuning extraction |
+| Benchmark IC | Performance comparison, feature analysis |
+
+#### Simulation Manager ICs
+| IC | Focus |
+|----|-------|
+| Scenario Generation IC | OpenSCENARIO, edge cases, accident recreation |
+| Sensor Simulation IC | Physics-based rendering, radar/lidar models |
+| SIL Testing IC | Software-in-loop, code coverage |
+| VIL Testing IC | Vehicle-in-loop, injected scenarios |
+
+#### Validation Manager ICs
+| IC | Focus |
+|----|-------|
+| Track Testing IC | Proving grounds, NCAP protocols, targets |
+| Real-World IC | Public road testing, fleet data, ODD validation |
+| Data Collection IC | Instrumentation, logging, ground truth |
+| Issue Tracking IC | Problem reports, root cause, countermeasures |
+
+---
+
+## 18. ADAS Aftermarket (`auto-adas-aftermarket`)
+
+**Focus**: ADAS calibration, retrofit, repair, and aftermarket integration
+
+### Managers (6)
+
+| Manager | Responsibility |
+|---------|----------------|
+| Calibration Manager | Static/dynamic calibration, target systems |
+| Retrofit Manager | Adding ADAS to non-equipped vehicles |
+| Repair Integration Manager | Post-collision recalibration, OEM procedures |
+| Diagnostic Manager | ADAS fault diagnosis, sensor health |
+| Tool Development Manager | Calibration tools, scan tool integration |
+| Training Manager | Technician certification, procedures |
+
+### ICs (30)
+
+#### Calibration Manager ICs
+| IC | Focus |
+|----|-------|
+| Static Calibration IC | Target setup, fixture alignment, room requirements |
+| Dynamic Calibration IC | Drive procedures, road requirements, conditions |
+| Camera Calibration IC | Windshield replacement, aim verification |
+| Radar Calibration IC | Bumper alignment, beam angle adjustment |
+| Lidar Calibration IC | Mounting, scan pattern verification |
+| Multi-Sensor IC | Cross-calibration, fusion alignment |
+
+#### Retrofit Manager ICs
+| IC | Focus |
+|----|-------|
+| Blind Spot IC | Aftermarket BSD systems, integration |
+| Backup Camera IC | Display integration, guidelines, OEM-style |
+| Collision Warning IC | Forward collision, pedestrian detection |
+| Parking Assist IC | Ultrasonic sensors, display systems |
+| Dash Cam Integration IC | ADAS-enabled cameras, data logging |
+
+#### Repair Integration Manager ICs
+| IC | Focus |
+|----|-------|
+| Post-Collision IC | When to calibrate, damage assessment |
+| OEM Procedures IC | Manufacturer-specific requirements |
+| Parts Verification IC | Correct sensors, brackets, wiring |
+| Alignment Requirements IC | Suspension, steering angle prerequisites |
+| Documentation IC | Calibration records, liability, certification |
+
+#### Diagnostic Manager ICs
+| IC | Focus |
+|----|-------|
+| ADAS DTC IC | Fault code interpretation, sensor faults |
+| Sensor Health IC | Blockage, degradation, alignment faults |
+| Communication IC | CAN/network faults, gateway issues |
+| Intermittent IC | Weather-related, temperature, vibration |
+| Root Cause IC | Systematic diagnosis, component isolation |
+
+#### Tool Development Manager ICs
+| IC | Focus |
+|----|-------|
+| Target Systems IC | OEM targets, universal systems, positioning |
+| Scan Tool IC | Autel ADAS, Launch, Bosch, Hunter integration |
+| Alignment Integration IC | Alignment rack, camera systems, data flow |
+| Cloud Services IC | VIN lookup, procedure delivery, updates |
+| Mobile Calibration IC | On-site calibration, van-based systems |
+
+#### Training Manager ICs
+| IC | Focus |
+|----|-------|
+| Certification IC | I-CAR, OEM training, competency verification |
+| Procedure Training IC | Step-by-step calibration procedures |
+| Safety Training IC | High-voltage awareness, sensor handling |
+| Business Training IC | Pricing, liability, shop setup |
+| Updates IC | New vehicle coverage, procedure changes |
+
+---
+
 ## Summary
 
 | Preset | Managers | ICs | Total Agents |
@@ -908,7 +1157,10 @@ Complete organizational structures for all 15 automotive industry presets.
 | Aftermarket Product | 5 | 20 | 25 |
 | CARB Compliance | 5 | 20 | 25 |
 | Owner Servicing | 4 | 16 | 20 |
-| **TOTAL** | **76** | **304** | **380** |
+| **EV Powertrain** | **7** | **35** | **42** |
+| **ADAS OEM** | **8** | **40** | **48** |
+| **ADAS Aftermarket** | **6** | **30** | **36** |
+| **TOTAL** | **97** | **409** | **506** |
 
 ## Usage
 

@@ -793,3 +793,99 @@ load_when: industryPreset
 - Community Forum IC
 - Video Tutorial IC
 
+---
+
+## Automotive - EV Powertrain (18 Managers)
+
+**Focus**: Electric vehicle drivetrain - reverse engineering, modification, parts, emulation
+
+```json
+{
+  "industryPreset": "auto-ev-powertrain",
+  "swarmDomains": [
+    "discovery", "product", "architecture", "backend",
+    "security", "quality", "release", "documentation",
+    "research", "embedded", "testing", "data",
+    "tooling", "manufacturing", "compliance", "simulation",
+    "protocols", "safety"
+  ]
+}
+```
+
+**Key ICs Emphasized**:
+- BMS Protocol IC
+- Cell Chemistry IC
+- Motor Control IC (FOC/DTC)
+- Inverter RE IC
+- EVSE Protocol IC (J1772, CCS, CHAdeMO)
+- BMS Emulator IC
+- Battery Cooling IC
+- Cell Sourcing IC
+- Power Upgrade IC
+- Conversion IC (ICE-to-EV)
+
+---
+
+## Automotive - ADAS OEM (20 Managers)
+
+**Focus**: OEM ADAS development - perception, control systems, safety, validation
+
+```json
+{
+  "industryPreset": "auto-adas-oem",
+  "swarmDomains": [
+    "discovery", "product", "architecture", "design",
+    "backend", "integration", "quality", "release",
+    "documentation", "security", "research", "embedded",
+    "testing", "simulation", "data", "compliance",
+    "safety", "protocols", "ai-ml", "infrastructure"
+  ]
+}
+```
+
+**Key ICs Emphasized**:
+- Sensor Fusion IC (Camera/Radar/Lidar)
+- Object Classification IC
+- Longitudinal Control IC (ACC, AEB)
+- Lateral Control IC (Lane Keeping)
+- Path Planning IC
+- ISO 26262 IC (ASIL, FMEA)
+- SOTIF IC (ISO 21448)
+- CAN Architecture IC
+- Automotive Ethernet IC (TSN)
+- Detection Thresholds IC
+- Scenario Generation IC (OpenSCENARIO)
+- Track Testing IC (NCAP)
+
+---
+
+## Automotive - ADAS Aftermarket (14 Managers)
+
+**Focus**: ADAS calibration, retrofit, repair integration, technician tools
+
+```json
+{
+  "industryPreset": "auto-adas-aftermarket",
+  "swarmDomains": [
+    "discovery", "product", "architecture", "design",
+    "frontend", "backend", "integration", "quality",
+    "release", "documentation", "training", "tooling",
+    "compliance", "communications"
+  ]
+}
+```
+
+**Key ICs Emphasized**:
+- Static Calibration IC
+- Dynamic Calibration IC
+- Camera Calibration IC
+- Radar Calibration IC
+- Post-Collision IC
+- OEM Procedures IC
+- Target Systems IC
+- Scan Tool IC (Autel, Launch, Bosch)
+- Mobile Calibration IC
+- I-CAR Certification IC
+- Blind Spot Retrofit IC
+- ADAS DTC IC
+

@@ -20,8 +20,8 @@ modules/
 ├── sdlc-workflow.md             # Phased development workflow
 ├── industries/
 │   ├── README.md                # Industry preset overview
-│   ├── presets.md               # Industry configurations (29 presets)
-│   └── automotive-swarm.md      # Automotive managers & ICs (76 managers, 304 ICs)
+│   ├── presets.md               # Industry configurations (32 presets)
+│   └── automotive-swarm.md      # Automotive managers & ICs (97 managers, 409 ICs)
 └── swarm/
     ├── architecture.md          # 40 Manager, 200+ IC architecture
     ├── swarm-director.md        # Director orchestration protocol
@@ -52,7 +52,7 @@ Modules load based on `.claude/config/features.json`:
 | Teams | 15 | `/team {type}` |
 | Parallel Models | 7 | Spawn patterns |
 | Project Templates | 35 | `/start-project {type}` |
-| Industry Presets | 29 | Config or `/init-autonomous` |
+| Industry Presets | 32 | Config or `/init-autonomous` |
 | Managers | 40 | Swarm mode |
 | ICs | 200+ | Swarm mode |
 
@@ -264,9 +264,9 @@ Contains:
 **Purpose:** Pre-configured swarm domain selections for industry verticals.
 
 Contains:
-- 29 Industry configurations total:
+- 32 Industry configurations total:
   - 14 General industries (SaaS, Fintech, E-commerce, Healthcare, Gaming, etc.)
-  - 15 Automotive verticals (OEM, Dealer, Aftermarket, Collision, Compliance)
+  - 18 Automotive verticals (OEM, Dealer, Aftermarket, Collision, EV, ADAS)
 - Optimized domain selections per industry
 - Key ICs emphasized for each vertical
 - JSON configuration examples
@@ -278,8 +278,11 @@ Automotive Presets:
 - Service: 3rd Party, Owner
 - Collision: Body, Powertrain
 - Compliance: CARB
+- EV Powertrain: Battery, Motor, Charging, Emulation, Mods
+- ADAS OEM: Perception, Control, Safety, Validation
+- ADAS Aftermarket: Calibration, Retrofit, Repair, Training
 
-See `automotive-swarm.md` for complete manager/IC hierarchies (76 managers, 304 ICs total).
+See `automotive-swarm.md` for complete manager/IC hierarchies (97 managers, 409 ICs total).
 
 ## Context Size Estimates
 

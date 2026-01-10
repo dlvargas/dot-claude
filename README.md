@@ -54,7 +54,7 @@ dot-claude transforms Claude Code into a fully autonomous development system cap
 │ SPECIALIZATION                                                  │
 │ ├── 13 Personalities (/persona)                                │
 │ ├── 36 Expert Consultants (/consult)                           │
-│ ├── 29 Industry Presets (including 15 Automotive)              │
+│ ├── 32 Industry Presets (including 18 Automotive)              │
 │ └── 6 Dynamic Scopes (/scope)                                  │
 ├─────────────────────────────────────────────────────────────────┤
 │ PROJECT SETUP                                                   │
@@ -96,7 +96,7 @@ cd your-project
 | Teams | 15 | `/team {type}` | Pre-configured parallel teams |
 | Parallel Models | 7 | Config | Alternative agent architectures |
 | Project Templates | 35 | `/start-project {type}` | Guided project scaffolding |
-| Industry Presets | 29 | `/init-autonomous` | Vertical-specific configurations |
+| Industry Presets | 32 | `/init-autonomous` | Vertical-specific configurations |
 | Managers | 40 | `/swarm` | Hierarchical team managers |
 | ICs | 200+ | `/swarm` | Specialized individual contributors |
 | Sandbox Levels | 10 | `/sandbox {level}` | Security access controls |
@@ -422,7 +422,7 @@ Pre-configured swarm domain selections for industry verticals:
 | **Startup** | 8 | MVP, iteration, growth hacking |
 | **Government** | 16 | FedRAMP, Section 508, NIST, clearance |
 
-### Automotive Industries (15)
+### Automotive Industries (18)
 
 | Industry | Preset Key | Managers | Key Focus Areas |
 |----------|------------|----------|-----------------|
@@ -441,8 +441,11 @@ Pre-configured swarm domain selections for industry verticals:
 | **Aftermarket Product** | `auto-aftermarket-product` | 15 | CAD, FEA/CFD, fitment DB, prototyping |
 | **CARB Compliance** | `auto-carb-compliance` | 14 | Executive orders, emissions test, anti-tamper |
 | **Owner Servicing** | `auto-owner-service` | 10 | DIY guides, parts lookup, torque specs |
+| **EV Powertrain** | `auto-ev-powertrain` | 18 | BMS, motor control, emulation, ICE-to-EV |
+| **ADAS OEM** | `auto-adas-oem` | 20 | Sensor fusion, ISO 26262, SOTIF, control systems |
+| **ADAS Aftermarket** | `auto-adas-aftermarket` | 14 | Calibration, retrofit, collision repair |
 
-**Automotive Swarm Totals**: 76 Managers, 304 ICs across all automotive verticals.
+**Automotive Swarm Totals**: 97 Managers, 409 ICs across all automotive verticals.
 See [automotive-swarm.md](modules/industries/automotive-swarm.md) for complete hierarchies.
 
 Configure via `/init-autonomous` or `features.json`:
