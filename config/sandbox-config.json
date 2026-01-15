@@ -1,0 +1,143 @@
+{
+  "version": "1.0.0",
+  "name": "Claude Sandbox Configuration",
+  "description": "Sanitization and boundary enforcement for Claude tool execution",
+
+  "boundaries": {
+    "projectRoot": {
+      "description": "Claude can only see paths within project root and above are masked",
+      "visible": true,
+      "alias": "$PROJECT"
+    },
+    "homeDirectory": {
+      "description": "User home directory - always sanitized",
+      "visible": false,
+      "alias": "$HOME",
+      "replacement": "/home/user"
+    },
+    "systemPaths": {
+      "description": "System paths outside project - sanitized but functional",
+      "visible": false,
+      "patterns": [
+        "/usr/*",
+        "/bin/*",
+        "/sbin/*",
+        "/opt/*",
+        "/etc/*",
+        "/var/*",
+        "/tmp/*"
+      ],
+      "allowExecutables": true
+    }
+  },
+
+  "sanitization": {
+    "username": {
+      "enabled": true,
+      "replacement": "user",
+      "patterns": [
+        "$USER",
+        "$USERNAME",
+        "$LOGNAME"
+      ]
+    },
+    "paths": {
+      "enabled": true,
+      "rules": [
+        {
+          "name": "home_directory",
+          "pattern": "^/Users/[^/]+",
+          "replacement": "/home/user",
+          "reversible": true
+        },
+        {
+          "name": "home_linux",
+          "pattern": "^/home/[^/]+",
+          "replacement": "/home/user",
+          "reversible": true
+        },
+        {
+          "name": "external_paths",
+          "description": "Paths outside project hierarchy",
+          "action": "hash_and_map",
+          "reversible": true
+        }
+      ]
+    },
+    "filenames": {
+      "enabled": true,
+      "rules": [
+        {
+          "name": "outside_project",
+          "description": "Files outside current project tree",
+          "action": "sanitize_with_reference",
+          "format": "[EXT_FILE_{hash}]",
+          "reversible": true
+        }
+      ]
+    },
+    "environment": {
+      "enabled": true,
+      "hide": [
+        "HOME",
+        "USER",
+        "USERNAME",
+        "LOGNAME",
+        "SHELL",
+        "SSH_*",
+        "AWS_*",
+        "GITHUB_*",
+        "API_*",
+        "SECRET_*",
+        "TOKEN_*",
+        "PASSWORD*",
+        "CREDENTIAL*"
+      ],
+      "passthrough": [
+        "PATH",
+        "LANG",
+        "LC_*",
+        "TERM",
+        "EDITOR",
+        "NODE_ENV",
+        "PWD"
+      ]
+    },
+    "logs": {
+      "enabled": true,
+      "aggressiveMode": true,
+      "patterns": [
+        "timestamps_relative": true,
+        "pids_masked": true,
+        "ports_visible": true,
+        "ips_masked": true
+      ]
+    }
+  },
+
+  "executables": {
+    "allowed": {
+      "description": "System binaries that can be executed (output still sanitized)",
+      "categories": {
+        "core": ["ls", "cat", "head", "tail", "grep", "find", "which", "echo", "printf"],
+        "files": ["cp", "mv", "mkdir", "touch", "chmod", "rm", "rmdir"],
+        "text": ["sed", "awk", "tr", "cut", "sort", "uniq", "wc", "diff"],
+        "compression": ["tar", "gzip", "gunzip", "zip", "unzip"],
+        "network": ["curl", "wget", "ping", "dig", "host"],
+        "process": ["ps", "kill", "pgrep"],
+        "dev": ["git", "node", "npm", "python", "python3", "pip", "cargo", "go"],
+        "build": ["make", "cmake", "gcc", "clang"]
+      }
+    },
+    "blocked": {
+      "description": "Commands that are never allowed",
+      "commands": ["sudo", "su", "passwd", "chown", "mount"]
+    }
+  },
+
+  "mappingStorage": {
+    "location": ".claude/sandbox/mappings.json",
+    "sessionScoped": true,
+    "persistAcrossSessions": false
+  }
+}

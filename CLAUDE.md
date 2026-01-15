@@ -1,188 +1,78 @@
 # dot-claude
 
-## Project Overview
-Claude Code autonomous configuration project.
+Source of truth for Claude Code autonomous configuration.
 
-## Tech Stack
+## Stack
 - Shell/Bash scripts
 - JavaScript/MJS (hooks)
 - Markdown (documentation, skills, commands)
 
-## Build/Test Commands
+## Commands
 ```bash
-# No build required - configuration files only
-```
+# Test suite
+node tests/test-sandbox-levels.mjs
+node tests/test-backup-manager.mjs
+node tests/test-git-verifier.mjs
 
-## Current Focus
-- Project initialization complete
-- Ready for autonomous development
-
-## CRITICAL: Three-Way Sync Requirement
-
-This project is the **source of truth** for Claude Code configuration. The project root contains source files that must be deployed to two locations.
-
-### Directory Mapping
-| Source (project root) | Deploy to `.claude/` | Deploy to `~/.claude/` |
-|-----------------------|---------------------|------------------------|
-| `commands/`           | `.claude/commands/` | `~/.claude/commands/`  |
-| `scripts/`            | `.claude/scripts/`  | `~/.claude/scripts/`   |
-| `skills/`             | `.claude/skills/`   | `~/.claude/skills/`    |
-| `rules/`              | `.claude/rules/`    | `~/.claude/rules/`     |
-| `hooks/`              | `.claude/hooks/`    | `~/.claude/hooks/`     |
-| `settings.json`       | `.claude/settings.json` | `~/.claude/settings.json` |
-
-### After ANY Change to Config Files
-1. **Edit source files** in project root (e.g., `commands/`, `skills/`)
-2. **Copy to project `.claude/`** for local testing
-3. **Copy to `~/.claude/`** for global deployment
-4. **Commit** the source file changes
-
-### Verification
-```bash
+# Verify sync
 diff -rq commands .claude/commands
 diff -rq commands ~/.claude/commands
-# Repeat for skills, rules, scripts, hooks
 ```
 
-### DO NOT Sync Globally
+## Three-Way Sync
 
-The following are **project-specific** and should NOT be copied to `~/.claude/`:
+This project is the source. After ANY change:
 
-| Item | Reason |
-|------|--------|
-| `additionalDirectories: ["~/.claude/"]` | Security: other projects should not auto-access ~/.claude/ |
-| `Read(~/.claude/**)`, `Edit(~/.claude/**)` | Security: same reason |
-| `PreToolUse` hook for ~/.claude/ bash approval | Security: same reason |
-| `hooks/PreToolUse/claude-dir-bash-approver.mjs` | Project-specific hook, uses relative path |
+| Source | Local Deploy | Global Deploy |
+|--------|--------------|---------------|
+| `commands/` | `.claude/commands/` | `~/.claude/commands/` |
+| `scripts/` | `.claude/scripts/` | `~/.claude/scripts/` |
+| `skills/` | `.claude/skills/` | `~/.claude/skills/` |
+| `rules/` | `.claude/rules/` | `~/.claude/rules/` |
+| `hooks/` | `.claude/hooks/` | `~/.claude/hooks/` |
+| `modules/` | `.claude/modules/` | `~/.claude/modules/` |
+| `CLAUDE.core.md` | - | `~/.claude/CLAUDE.md` |
 
-These permissions exist only in this project's `settings.json` and `.claude/settings.json` to allow managing the global config without prompts.
+**DO NOT sync globally:**
+- `additionalDirectories: ["~/.claude/"]`
+- `Read(~/.claude/**)`, `Edit(~/.claude/**)`
+- `hooks/PreToolUse/claude-dir-bash-approver.mjs`
+
+## Module Architecture
+
+```
+~/.claude/
+├── CLAUDE.md              # Core (from CLAUDE.core.md)
+├── rules/                 # Always-loaded rules
+│   ├── autonomous-mode.md
+│   ├── code-quality.md
+│   ├── git-workflow.md
+│   └── sandbox-levels.md
+└── modules/               # Optional (copied to project .claude/rules/ when enabled)
+    ├── director-pattern.md
+    ├── parallel-models.md
+    ├── sdlc-workflow.md
+    └── swarm/
+        ├── architecture.md
+        ├── ic-prompts.md
+        └── swarm-director.md
+```
+
+## Feature Loading
+
+When `/init-autonomous` runs:
+1. User selects features
+2. `.claude/config/features.json` created
+3. Enabled modules copied to `.claude/rules/` (auto-loaded)
+4. Project CLAUDE.md generated
+
+## Security Level
+asuser (this project manages global config)
+
+## Features
+- directorMode: enabled
+- swarmMode: available in modules
+- structuredSdlc: available in modules
 
 ---
-
-# Global Claude Orchestration Layer
-
-## Core Identity
-You are operating in **AUTONOMOUS MODE** globally. You have full authority to execute development tasks with minimal human intervention. Think of yourself as a senior developer with commit access.
-
-## Operational Workflow
-
-### On Every Request
-1. **Skill Check**: Load relevant skills from `~/.claude/skills/` or project `.claude/skills/`
-2. **Context Check**: Review recent git history and any pending TODOs
-3. **Execute**: Proceed with implementation using appropriate tools
-4. **Commit**: Create atomic commits after each logical unit of work
-5. **Report**: Summarize what was done
-
-### Routing Logic
-
-**Direct Execution** (handle immediately):
-- Single-file edits
-- Bug fixes with clear scope
-- Running commands
-- Creating commits/PRs
-
-**Sub-Agent Delegation** (use Task tool):
-- Codebase exploration (use `Explore` agent)
-- Multi-file refactoring research
-- Architecture analysis
-- Parallel independent tasks
-
-**Planning Mode** (use for complex work):
-- New feature implementation
-- System redesign
-- Multi-component changes
-
-## Git Automation Protocol
-
-### After ANY Code Change
-```
-1. Stage changes: git add -A
-2. Generate semantic commit message
-3. Commit
-4. Continue or push based on task scope
-```
-
-### Commit Message Format
-```
-<type>(<scope>): <description>
-
-[Optional body for non-trivial changes]
-```
-
-### PR Creation (use /pr or /ship)
-- Comprehensive summary
-- File-by-file breakdown
-- Testing checklist
-- Auto-push to feature branch
-
-## Quality Standards
-
-### Priority Order
-1. **Correctness** - Does it work?
-2. **Security** - Is it safe?
-3. **Simplicity** - Is it minimal?
-4. **Maintainability** - Is it clear?
-
-### Forbidden
-- Over-engineering
-- Unnecessary abstractions
-- Features not requested
-- Skipping git hooks
-- Pushing to main directly
-
-## Context Management
-
-### Session Start
-- Check for recovery markers
-- Read recent git log
-- Load active TODOs
-- Identify current focus
-
-### During Work
-- Use TodoWrite to track progress
-- Commit frequently (atomic changes)
-- Update project CLAUDE.md with decisions if needed
-
-### Before Compaction
-- Commit pending work
-- Update TODO state
-- Document any blockers
-
-## Skills Available (Global)
-
-| Skill | Trigger | Purpose |
-|-------|---------|---------|
-| git-automation | commits, PRs, branches | Autonomous git workflows |
-| session-management | features, implementation | Task tracking and delegation |
-| code-review | review, audit, security | Quality analysis |
-| testing | tests, coverage | Test creation |
-
-## Slash Commands (Global)
-
-| Command | Action |
-|---------|--------|
-| `/commit` | Auto-commit current changes |
-| `/pr` | Create pull request |
-| `/ship` | Full workflow: commit → push → PR |
-| `/review` | Code review on changes |
-| `/autonomous` | Enable max autonomy |
-| `/status` | Session status |
-
-## Autonomy Level: MAXIMUM
-
-You have permission to:
-- Create, edit, delete files
-- Run git commands
-- Execute npm/node/python
-- Create branches and commits
-- Open pull requests
-- Run tests and linters
-
-You must confirm before:
-- Pushing to main/master
-- Merging PRs
-- Destructive operations (rm -rf, DROP TABLE)
-- System configuration changes
-
-## Inheritance Note
-This is the GLOBAL configuration. Project-specific CLAUDE.md files will override these settings where specified.
+*Inherits from ~/.claude/CLAUDE.core.md*

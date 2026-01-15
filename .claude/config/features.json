@@ -1,0 +1,35 @@
+{
+  "sandboxLevel": "asuser",
+  "logging": true,
+  "autoBackups": true,
+  "autoGitCommits": true,
+  "diffTracking": true,
+  "autoLinting": true,
+  "pathSanitization": true,
+  "smartContext": false,
+  "interactiveMode": false,
+  "directorMode": true,
+  "swarmMode": true,
+  "structuredSdlc": false,
+  "hundredAndHundred": false,
+  "swarmPreset": "standard",
+  "swarmDomains": [
+    "discovery",
+    "product",
+    "architecture",
+    "design",
+    "frontend",
+    "backend",
+    "integration",
+    "operations",
+    "quality",
+    "devops",
+    "documentation",
+    "security"
+  ],
+  "parallelModels": [
+    "peer-review",
+    "adversarial-testing",
+    "parallel-specialists"
+  ]
+}

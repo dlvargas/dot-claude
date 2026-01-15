@@ -58,6 +58,35 @@
           "(write|update|create).*?(doc|readme|documentation)"
         ]
       }
+    },
+    "start-project": {
+      "enforcement": "explicit",
+      "priority": "high",
+      "skillPath": ".claude/skills/start-project/",
+      "templatePath": ".claude/templates/projects/",
+      "promptTriggers": {
+        "keywords": ["start project", "new project", "init project", "create project"],
+        "intentPatterns": [
+          "(start|begin|create|init).*?project",
+          "build.*?(cli|gui|web|app|service|product)",
+          "(new|change).*?(crm|erp|pos)"
+        ]
+      },
+      "projectTypes": [
+        "cli_tool", "gui_tool", "web_app", "system_service",
+        "full_stack_product", "enterprise_stack_product",
+        "penetration_test", "back_door_injection", "back_door_finder",
+        "obfuscation_tool", "secure_encrypt", "secure_decrypt",
+        "secure_transport", "post_quantum_encrypt", "post_quantum_decrypt",
+        "post_quantum_transport", "post_quantum_local_device", "post_quantum_remote_device",
+        "crm", "erp", "pos", "retail_ops",
+        "hotel_ops", "hotel_res", "hotel_billing",
+        "cannabis_seed_to_sale",
+        "data_center", "systems_audit", "documentation",
+        "sdlc_waterfall", "sdlc_agile", "sdlc_xtreme", "sdlc_10xdev", "sdlc_theaiway",
+        "human_hours_to_claude_hours", "provide_prompts_for_need", "do_it_for_me_claude"
+      ],
+      "variants": ["new", "change_request"]
     }
   },
   "globalSettings": {

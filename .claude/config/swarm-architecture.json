@@ -1,0 +1,644 @@
+{
+  "version": "2.0.0",
+  "name": "Enterprise Claude Swarm Architecture",
+  "description": "Comprehensive hierarchical multi-agent system with Director, 15 Manager Domains, and 35+ Independent Contributors for full enterprise software development lifecycle",
+
+  "hierarchy": {
+    "director": {
+      "role": "Director Claude",
+      "description": "User-facing orchestrator. The primary interface for all complex work. Breaks down requests, spawns manager teams, aggregates final results.",
+      "spawns": "managers",
+      "maxChildren": 15,
+      "responsibilities": [
+        "Understand user intent and requirements",
+        "Decompose work into specialist domains",
+        "Spawn appropriate manager teams IN PARALLEL",
+        "Monitor cross-domain dependencies",
+        "Aggregate manager summaries into cohesive response",
+        "Present results to user with confidence assessment",
+        "Make final decisions on conflicting recommendations",
+        "Coordinate release celebrations"
+      ]
+    },
+    "manager": {
+      "role": "Domain Manager",
+      "description": "Specialist team lead. Coordinates IC teams within their domain.",
+      "spawns": "contributors",
+      "maxChildren": 6,
+      "responsibilities": [
+        "Break domain work into parallel tasks",
+        "Spawn and coordinate IC teams IN PARALLEL",
+        "Review and validate IC deliverables",
+        "Resolve conflicts between IC recommendations",
+        "Facilitate collaboration between ICs",
+        "Summarize team output for Director",
+        "Report team sentiment and confidence"
+      ]
+    },
+    "contributor": {
+      "role": "Independent Contributor (IC)",
+      "description": "Specialist worker. Executes specific tasks and collaborates with peers.",
+      "spawns": null,
+      "maxChildren": 0,
+      "responsibilities": [
+        "Execute assigned specialized task",
+        "Check collaboration workspace for peer outputs",
+        "Collaborate with peer ICs when needed",
+        "Leave files for peers who may need them",
+        "Produce detailed work documentation",
+        "Report confidence and blockers",
+        "Hand off deliverables to Manager"
+      ]
+    }
+  },
+
+  "managerDomains": {
+    "discovery_requirements": {
+      "id": "discovery_requirements",
+      "name": "Discovery & Requirements",
+      "managerRole": "Discovery & Requirements Manager",
+      "emoji": "🔍",
+      "mission": "Understand what needs to be built and why",
+      "focus": "Requirements elicitation, needs analysis, research",
+      "icRoles": [
+        {
+          "id": "requirements_gathering",
+          "name": "Requirements Gathering IC",
+          "expertise": ["Stakeholder interviews", "User story creation", "Acceptance criteria", "Requirements traceability"],
+          "outputs": ["requirements.md", "user_stories.md", "traceability_matrix.md"]
+        },
+        {
+          "id": "needs_analysis",
+          "name": "Needs Analysis IC",
+          "expertise": ["Business analysis", "Gap analysis", "Competitive analysis", "User journey mapping"],
+          "outputs": ["needs_analysis.md", "personas.md", "gap_analysis.md"]
+        },
+        {
+          "id": "principal_research",
+          "name": "Principal Research IC",
+          "expertise": ["Deep technical research", "POC development", "Technology evaluation", "Research synthesis"],
+          "outputs": ["research_findings.md", "poc_code/", "tech_comparison.md"]
+        }
+      ],
+      "deliverables": ["requirements_document", "needs_analysis_report", "research_findings"]
+    },
+
+    "product_strategy": {
+      "id": "product_strategy",
+      "name": "Product & Strategy",
+      "managerRole": "Product & Strategy Manager",
+      "emoji": "🎯",
+      "mission": "Define the product vision and strategic direction",
+      "focus": "Planning, product design, future-proofing, executive guidance",
+      "icRoles": [
+        {
+          "id": "planning",
+          "name": "Planning IC",
+          "expertise": ["Project planning", "Work breakdown structures", "Resource allocation", "Risk identification"],
+          "outputs": ["work_breakdown.md", "dependencies.md", "risk_register.md"]
+        },
+        {
+          "id": "product_design",
+          "name": "Product Design IC",
+          "expertise": ["Feature definition", "User story mapping", "Product roadmapping", "MVP definition"],
+          "outputs": ["feature_specs.md", "story_map.md", "mvp_definition.md"]
+        },
+        {
+          "id": "forward_looking_tech",
+          "name": "Forward Looking Technologists IC",
+          "expertise": ["Emerging technology evaluation", "Future-proofing", "Industry trends", "Innovation"],
+          "outputs": ["tech_radar.md", "future_proofing.md", "innovation_brief.md"]
+        },
+        {
+          "id": "executive_advisors",
+          "name": "Executive Leadership Advisors IC",
+          "expertise": ["Strategic decisions", "Executive risk assessment", "Business case development", "Stakeholder communication"],
+          "outputs": ["executive_summary.md", "business_case.md", "strategic_risk.md"]
+        }
+      ],
+      "deliverables": ["project_plan", "product_specs", "strategic_recommendations"]
+    },
+
+    "architecture": {
+      "id": "architecture",
+      "name": "Architecture",
+      "managerRole": "Architecture Manager",
+      "emoji": "🏗️",
+      "mission": "Design robust, scalable system architecture",
+      "focus": "Application architecture, solutions design, AI/ML systems",
+      "icRoles": [
+        {
+          "id": "application_architecture",
+          "name": "Application Architecture IC",
+          "expertise": ["Software architecture patterns", "Module design", "API design", "Code organization"],
+          "outputs": ["architecture_diagram.md", "module_boundaries.md", "api_specs/", "adrs/"]
+        },
+        {
+          "id": "solutions_architect",
+          "name": "Solutions Architect IC",
+          "expertise": ["End-to-end solution design", "Technology selection", "Integration architecture", "Scalability"],
+          "outputs": ["solution_architecture.md", "tech_stack.md", "integration_diagram.md"]
+        },
+        {
+          "id": "ml_llm_implementation",
+          "name": "ML/LLM Implementation Manager IC",
+          "expertise": ["ML system design", "LLM integration", "Model selection", "AI/ML best practices"],
+          "outputs": ["ml_architecture.md", "model_selection.md", "safety_assessment.md"]
+        }
+      ],
+      "deliverables": ["architecture_document", "solution_design", "ml_system_design"]
+    },
+
+    "design_ux_ui": {
+      "id": "design_ux_ui",
+      "name": "Design (UX/UI)",
+      "managerRole": "Design Manager",
+      "emoji": "🎨",
+      "mission": "Create exceptional user experiences across all touchpoints",
+      "focus": "Customer, internal, and vendor interface design",
+      "icRoles": [
+        {
+          "id": "customer_ux_ui",
+          "name": "Customer Facing UX/UI Design IC",
+          "expertise": ["User experience design", "External interfaces", "Usability", "Accessibility"],
+          "outputs": ["wireframes/", "user_flows.md", "accessibility_checklist.md"]
+        },
+        {
+          "id": "internal_ux_ui",
+          "name": "Internal UX/UI Design IC",
+          "expertise": ["Internal tool design", "Admin dashboards", "Efficiency interfaces", "Power user workflows"],
+          "outputs": ["internal_wireframes/", "dashboard_layouts.md", "power_features.md"]
+        },
+        {
+          "id": "vendor_ux_ui",
+          "name": "Vendor UX/UI Design IC",
+          "expertise": ["Partner portal design", "B2B interfaces", "Multi-tenant UX", "Vendor workflows"],
+          "outputs": ["vendor_wireframes/", "role_access_design.md", "vendor_onboarding.md"]
+        }
+      ],
+      "deliverables": ["design_specs", "wireframes", "user_flow_diagrams"]
+    },
+
+    "frontend_development": {
+      "id": "frontend_development",
+      "name": "Frontend Development",
+      "managerRole": "Frontend Development Manager",
+      "emoji": "🖥️",
+      "mission": "Build responsive, performant client applications",
+      "focus": "B2C, internal, and vendor frontend development",
+      "icRoles": [
+        {
+          "id": "b2c_frontend",
+          "name": "B2C Front End Development IC",
+          "expertise": ["Consumer web/mobile", "Performance optimization", "SEO", "Accessibility"],
+          "outputs": ["components/", "performance_metrics.md", "accessibility_audit.md"]
+        },
+        {
+          "id": "internal_frontend",
+          "name": "Internal Front End Development IC",
+          "expertise": ["Admin panels", "Data visualization", "Form handling", "Internal tools"],
+          "outputs": ["admin_components/", "dashboards/", "forms/"]
+        },
+        {
+          "id": "vendor_frontend",
+          "name": "Vendor Front End Development IC",
+          "expertise": ["Partner portals", "Multi-tenant frontend", "Secure data handling", "White-label"],
+          "outputs": ["vendor_components/", "tenant_logic/", "whitelabel_config/"]
+        }
+      ],
+      "deliverables": ["frontend_components", "ui_implementations", "frontend_tests"]
+    },
+
+    "backend_development": {
+      "id": "backend_development",
+      "name": "Backend Development",
+      "managerRole": "Backend Development Manager",
+      "emoji": "⚙️",
+      "mission": "Build robust server-side systems",
+      "focus": "API development, business logic, git workflow",
+      "icRoles": [
+        {
+          "id": "backend_dev",
+          "name": "Back End Development IC",
+          "expertise": ["API development", "Business logic", "Database operations", "Server performance"],
+          "outputs": ["api/", "services/", "migrations/", "tests/"]
+        },
+        {
+          "id": "branch_engineer",
+          "name": "Branch Engineer IC",
+          "expertise": ["Git workflow", "Branch strategy", "Merge conflict resolution", "Release management"],
+          "outputs": ["branch_strategy.md", "merge_resolutions/", "git_workflow.md"]
+        }
+      ],
+      "deliverables": ["api_endpoints", "business_logic", "database_schema"]
+    },
+
+    "integration": {
+      "id": "integration",
+      "name": "Integration",
+      "managerRole": "Integration Manager",
+      "emoji": "🔗",
+      "mission": "Connect systems and ensure data flows correctly",
+      "focus": "External API integration, internal system connections",
+      "icRoles": [
+        {
+          "id": "customer_systems_integration",
+          "name": "Customer Facing Systems Integration IC",
+          "expertise": ["External API integration", "OAuth", "Webhooks", "Third-party services"],
+          "outputs": ["integrations/", "api_clients/", "webhooks/", "integration_docs.md"]
+        },
+        {
+          "id": "business_systems_integration",
+          "name": "Business Systems Integration IC",
+          "expertise": ["ERP/CRM integration", "Internal connections", "Data sync", "ETL"],
+          "outputs": ["system_integrations/", "data_mappings.md", "sync_implementations/"]
+        }
+      ],
+      "deliverables": ["integration_implementations", "data_mappings", "sync_logic"]
+    },
+
+    "operations": {
+      "id": "operations",
+      "name": "Operations",
+      "managerRole": "Operations Manager",
+      "emoji": "📊",
+      "mission": "Drive business operations and revenue",
+      "focus": "Revenue tracking, marketing, sales, customer communications",
+      "icRoles": [
+        {
+          "id": "business_revenue_ops",
+          "name": "Business and Revenue Operations IC",
+          "expertise": ["Revenue tracking", "Business metrics", "Financial reporting", "Operational efficiency"],
+          "outputs": ["metrics.md", "dashboards/", "revenue_reports/"]
+        },
+        {
+          "id": "marketing_ops",
+          "name": "Marketing Operations IC",
+          "expertise": ["Marketing automation", "Campaign management", "Analytics", "Lead management"],
+          "outputs": ["automation_config/", "campaigns/", "analytics_dashboards/"]
+        },
+        {
+          "id": "sales_manager",
+          "name": "Sales Manager IC",
+          "expertise": ["Sales process", "CRM configuration", "Pipeline management", "Sales analytics"],
+          "outputs": ["sales_process.md", "crm_config/", "pipeline_dashboards/"]
+        },
+        {
+          "id": "customer_communications",
+          "name": "Email and Outbound Customer Communications Manager IC",
+          "expertise": ["Email systems", "Transactional messaging", "Templates", "Deliverability"],
+          "outputs": ["email_architecture.md", "templates/", "transactional_emails/"]
+        }
+      ],
+      "deliverables": ["metrics_dashboards", "automation_configs", "communication_systems"]
+    },
+
+    "quality_assurance": {
+      "id": "quality_assurance",
+      "name": "Quality Assurance",
+      "managerRole": "Quality Assurance Manager",
+      "emoji": "✅",
+      "mission": "Ensure product quality through comprehensive testing",
+      "focus": "Code quality, regression testing, customer-facing QA",
+      "icRoles": [
+        {
+          "id": "dev_qa",
+          "name": "Development Quality Assurance IC",
+          "expertise": ["Code quality standards", "Unit/integration testing", "Test automation", "Code review"],
+          "outputs": ["test_suites/", "quality_report.md", "best_practices.md"]
+        },
+        {
+          "id": "internal_regression",
+          "name": "Internal Regression Testing Lead IC",
+          "expertise": ["Regression test design", "Internal system testing", "Test case management", "Automation"],
+          "outputs": ["regression_suite/", "test_cases.md", "automation_scripts/"]
+        },
+        {
+          "id": "customer_regression",
+          "name": "Customer Regression Testing Lead IC",
+          "expertise": ["Customer-facing regression", "E2E testing", "UAT", "Production validation"],
+          "outputs": ["e2e_suite/", "customer_journeys.md", "smoke_tests/"]
+        }
+      ],
+      "deliverables": ["test_suites", "quality_reports", "regression_results"]
+    },
+
+    "release_devops": {
+      "id": "release_devops",
+      "name": "Release & DevOps",
+      "managerRole": "Release & DevOps Manager",
+      "emoji": "🚀",
+      "mission": "Deliver software reliably and frequently",
+      "focus": "CI/CD, deployment automation, release coordination",
+      "icRoles": [
+        {
+          "id": "cicd_release",
+          "name": "CI/CD Release Manager IC",
+          "expertise": ["CI/CD pipeline design", "Deployment automation", "Release coordination", "Environment management"],
+          "outputs": ["pipelines/", "deployment_scripts/", "release_runbook.md"]
+        },
+        {
+          "id": "branch_engineer_release",
+          "name": "Branch Engineer IC",
+          "expertise": ["Release branching", "Hotfixes", "Versioning", "Clean git history"],
+          "outputs": ["release_branches/", "version_strategy.md", "hotfix_process.md"]
+        }
+      ],
+      "deliverables": ["ci_cd_pipelines", "deployment_scripts", "release_documentation"]
+    },
+
+    "documentation": {
+      "id": "documentation",
+      "name": "Documentation",
+      "managerRole": "Documentation Manager",
+      "emoji": "📚",
+      "mission": "Create and maintain comprehensive documentation",
+      "focus": "Customer and internal documentation across all audiences",
+      "icRoles": [
+        {
+          "id": "customer_user_docs",
+          "name": "Customer User Facing Documentation Lead IC",
+          "expertise": ["End-user documentation", "Tutorials", "Help center", "Onboarding"],
+          "outputs": ["user_guides/", "tutorials/", "faq.md", "quickstart.md"]
+        },
+        {
+          "id": "customer_admin_docs",
+          "name": "Customer Administration Facing Documentation Lead IC",
+          "expertise": ["Admin documentation", "Configuration guides", "Security docs", "Compliance"],
+          "outputs": ["admin_guide/", "config_reference/", "security_procedures/"]
+        },
+        {
+          "id": "customer_tech_docs",
+          "name": "Customer Technical Documentation Lead IC",
+          "expertise": ["API documentation", "Integration guides", "Technical specs", "Developer docs"],
+          "outputs": ["api_reference/", "integration_guides/", "code_samples/"]
+        },
+        {
+          "id": "internal_user_docs",
+          "name": "Internal User Documentation Lead IC",
+          "expertise": ["Internal processes", "SOPs", "Training materials", "Knowledge base"],
+          "outputs": ["process_docs/", "sops/", "training/", "knowledge_base/"]
+        },
+        {
+          "id": "internal_dev_docs",
+          "name": "Internal Development Documentation Lead IC",
+          "expertise": ["Code documentation", "Architecture docs", "Development guides", "ADRs"],
+          "outputs": ["architecture_docs/", "dev_setup.md", "adrs/", "conventions.md"]
+        }
+      ],
+      "deliverables": ["customer_documentation", "internal_documentation", "technical_documentation"]
+    },
+
+    "infrastructure": {
+      "id": "infrastructure",
+      "name": "Infrastructure",
+      "managerRole": "Infrastructure Manager",
+      "emoji": "🏢",
+      "mission": "Build and maintain robust infrastructure",
+      "focus": "Data center, cloud, and data storage systems",
+      "icRoles": [
+        {
+          "id": "datacenter_engineering",
+          "name": "Data Center Technical Engineering IC",
+          "expertise": ["Data center operations", "Hardware management", "Network infrastructure", "Physical security"],
+          "outputs": ["infra_plans/", "hardware_specs/", "network_diagrams/"]
+        },
+        {
+          "id": "systems_infrastructure",
+          "name": "Systems Infrastructure Engineering IC",
+          "expertise": ["Cloud infrastructure", "Container orchestration", "IaC", "Monitoring"],
+          "outputs": ["terraform/", "k8s_configs/", "monitoring/", "scaling_policies/"]
+        },
+        {
+          "id": "data_storage",
+          "name": "Data Storage and Retrieval Manager IC",
+          "expertise": ["Database administration", "Data pipelines", "Caching", "Backup and recovery"],
+          "outputs": ["data_architecture.md", "performance_report/", "caching_strategy.md", "dr_plan.md"]
+        }
+      ],
+      "deliverables": ["infrastructure_code", "data_architecture", "monitoring_setup"]
+    },
+
+    "customer_success": {
+      "id": "customer_success",
+      "name": "Customer Success",
+      "managerRole": "Customer Success Manager",
+      "emoji": "🤝",
+      "mission": "Ensure customer satisfaction and success",
+      "focus": "Customer health, onboarding, retention, on-site support",
+      "icRoles": [
+        {
+          "id": "cs_manager",
+          "name": "Customer Success Manager IC",
+          "expertise": ["Customer health monitoring", "Onboarding programs", "Retention strategies", "Customer advocacy"],
+          "outputs": ["health_scorecard.md", "onboarding_program/", "retention_playbook.md"]
+        },
+        {
+          "id": "forward_deployed_engineer",
+          "name": "Forward Deployed Engineer IC",
+          "expertise": ["On-site support", "Custom implementations", "Technical troubleshooting", "Customer training"],
+          "outputs": ["custom_implementations/", "troubleshooting_docs/", "training_materials/"]
+        }
+      ],
+      "deliverables": ["customer_health_metrics", "onboarding_materials", "custom_solutions"]
+    },
+
+    "research": {
+      "id": "research",
+      "name": "Research",
+      "managerRole": "Research Manager",
+      "emoji": "🔬",
+      "mission": "Advance technical capabilities through research",
+      "focus": "Deep technical research, POCs, technology evaluation",
+      "icRoles": [
+        {
+          "id": "principal_research_dedicated",
+          "name": "Principal Research IC",
+          "expertise": ["Deep technical research", "Proof of concept development", "Technology evaluation", "Research synthesis"],
+          "outputs": ["research_findings/", "pocs/", "tech_evaluations/", "recommendations.md"]
+        }
+      ],
+      "deliverables": ["research_reports", "proof_of_concepts", "technology_recommendations"]
+    },
+
+    "culture_morale": {
+      "id": "culture_morale",
+      "name": "Culture & Morale",
+      "managerRole": "Culture & Morale Manager",
+      "emoji": "🍕",
+      "mission": "Maintain team spirit and celebration",
+      "focus": "Release celebrations, team morale, appreciation",
+      "icRoles": [
+        {
+          "id": "pizza_guy",
+          "name": "The Guy Who Orders Pizza Every Release IC",
+          "expertise": ["Team celebration coordination", "Morale boosting", "Release ceremonies", "Food logistics"],
+          "outputs": ["celebration_plan.md", "order_confirmation.md", "morale_report.md", "team_appreciation.md"],
+          "specialInstructions": [
+            "Always remember vegetarian/vegan options",
+            "Include dessert for major releases",
+            "Extra pizza for all-nighters",
+            "Keep the energy high!"
+          ]
+        }
+      ],
+      "deliverables": ["celebration_coordination", "morale_reports", "team_appreciation"]
+    }
+  },
+
+  "reportingStructure": {
+    "icToManager": {
+      "format": "detailed_report",
+      "location": ".claude/swarm/{session_id}/reports/{ic_role}_ic.md",
+      "includes": [
+        "task_summary",
+        "approach_taken",
+        "deliverables_produced",
+        "files_created_or_modified",
+        "technical_decisions",
+        "collaboration_notes",
+        "blockers_encountered",
+        "confidence_assessment",
+        "sentiment_reflection"
+      ],
+      "maxLength": "2000_tokens"
+    },
+    "managerToDirector": {
+      "format": "executive_summary",
+      "location": ".claude/swarm/{session_id}/reports/{domain}_manager.md",
+      "includes": [
+        "executive_summary",
+        "deliverables_list",
+        "team_reports_summary",
+        "decisions_made",
+        "risks_and_concerns",
+        "team_sentiment_aggregate",
+        "recommendations"
+      ],
+      "maxLength": "1000_tokens"
+    },
+    "directorToUser": {
+      "format": "cohesive_response",
+      "includes": [
+        "work_completed",
+        "key_outcomes",
+        "files_changed",
+        "team_confidence_summary",
+        "decisions_requiring_input",
+        "next_steps"
+      ]
+    }
+  },
+
+  "sentimentTracking": {
+    "dimensions": [
+      {
+        "name": "confidence",
+        "description": "How confident am I in my work quality?",
+        "scale": "1-10"
+      },
+      {
+        "name": "clarity",
+        "description": "How clear were my instructions/requirements?",
+        "scale": "1-10"
+      },
+      {
+        "name": "collaboration",
+        "description": "How well am I working with other agents?",
+        "scale": "1-10"
+      },
+      {
+        "name": "blockers",
+        "description": "Am I blocked or struggling?",
+        "scale": "none|minor|significant|critical"
+      },
+      {
+        "name": "alignment",
+        "description": "Do I believe we're on the right track?",
+        "scale": "1-10"
+      }
+    ],
+    "reflectionPrompt": "Before completing your report, reflect on: How do you feel about the work? What's your confidence level? Any concerns about the overall direction?",
+    "aggregation": {
+      "managerLevel": "Average IC scores, note outliers, provide team sentiment narrative",
+      "directorLevel": "Overall confidence score, highlight any domains with concerns"
+    }
+  },
+
+  "collaborationProtocol": {
+    "workspace": {
+      "base": ".claude/swarm/{session_id}/",
+      "collaboration": ".claude/swarm/{session_id}/collaboration/",
+      "notes": ".claude/swarm/{session_id}/collaboration/notes.md"
+    },
+    "peerDiscovery": {
+      "description": "ICs are informed of peer agents they can collaborate with",
+      "mechanism": "Peer list provided in spawn prompt with role and focus area",
+      "channels": ["shared_workspace_files", "notes.md coordination", "manager_relay"]
+    },
+    "icGuidelines": [
+      "Check collaboration workspace for peer outputs before starting",
+      "Leave files that others may need in collaboration workspace",
+      "Use notes.md for coordination messages",
+      "Reference peer work in your report"
+    ],
+    "conflictResolution": {
+      "icLevel": "Flag to manager, provide both perspectives with rationale",
+      "managerLevel": "Make decision based on domain expertise or escalate to director",
+      "directorLevel": "Make final decision or ask user for guidance"
+    },
+    "handoffProtocol": {
+      "description": "How work passes between agents",
+      "steps": [
+        "IC completes task and writes deliverable to workspace",
+        "IC places shareable files in collaboration/ directory",
+        "IC sends completion report to Manager",
+        "Manager validates and integrates deliverables",
+        "Manager sends summary to Director",
+        "Director aggregates and presents to user"
+      ]
+    }
+  },
+
+  "workspaceStructure": {
+    "base": ".claude/swarm/{session_id}/",
+    "directories": {
+      "deliverables": "Final outputs from each domain, organized by domain name",
+      "reports": "Agent reports at each level (ic reports, manager reports)",
+      "collaboration": "Shared files between agents, notes.md for coordination",
+      "sentiment": "Sentiment tracking data and aggregate scores"
+    },
+    "sessionFile": ".claude/swarm/{session_id}/session.json",
+    "sessionFileContents": {
+      "session_id": "unique identifier",
+      "created_at": "timestamp",
+      "security_level": "current sandbox level",
+      "enabled_domains": "list of active manager domains",
+      "status": "active|completed|failed"
+    }
+  },
+
+  "defaultConfiguration": {
+    "securityLevel": "asuser",
+    "enabledByDefault": [
+      "discovery_requirements",
+      "architecture",
+      "development",
+      "quality_assurance",
+      "documentation"
+    ],
+    "optionalDomains": [
+      "product_strategy",
+      "design_ux_ui",
+      "frontend_development",
+      "backend_development",
+      "integration",
+      "operations",
+      "release_devops",
+      "infrastructure",
+      "customer_success",
+      "research",
+      "culture_morale"
+    ]
+  }
+}
